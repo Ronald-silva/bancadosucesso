@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Zap, Clock } from "lucide-react";
+import { Zap, Clock } from "lucide-react";
+import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const HeroSection = () => {
   return (
@@ -25,12 +26,11 @@ const HeroSection = () => {
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Logo/Brand */}
           <div className="mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            <div className="flex items-center gap-3 mb-2">
-              <ShoppingBag className="w-12 h-12 text-secondary" />
-              <h2 className="font-display font-black text-3xl md:text-4xl text-primary-foreground">
-                Banca do <span className="text-gradient-gold">Sucesso</span>
-              </h2>
-            </div>
+            <img 
+              src={logoImg} 
+              alt="Banca do Sucesso Home Center" 
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-glow"
+            />
           </div>
 
           {/* Main Headline */}

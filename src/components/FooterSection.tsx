@@ -45,7 +45,7 @@ const FooterSection = () => {
               <li>
                 <a href="#" className="flex items-center gap-2 text-primary-foreground/80 hover:text-secondary transition-colors">
                   <Phone className="w-4 h-4" />
-                  <span className="text-sm">+56 (91) 98275-0788</span>
+                  <span className="text-sm">+55 (91) 8275-0788</span>
                 </a>
               </li>
               <li>

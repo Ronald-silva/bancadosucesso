@@ -1,4 +1,5 @@
-import { ShoppingBag, Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const FooterSection = () => {
   return (
@@ -8,7 +9,11 @@ const FooterSection = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <ShoppingBag className="w-8 h-8 text-secondary" />
+              <img 
+                src={logoImg} 
+                alt="Banca do Sucesso Home Center" 
+                className="w-14 h-14 rounded-full object-cover"
+              />
               <h3 className="font-display font-bold text-2xl">
                 Banca do <span className="text-secondary">Sucesso</span>
               </h3>

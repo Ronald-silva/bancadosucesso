@@ -51,7 +51,7 @@ const FooterSection = () => {
               <li>
                 <div className="flex items-start gap-2 text-primary-foreground/80">
                   <MapPin className="w-4 h-4 mt-0.5" />
-                  <span className="text-sm">São Paulo, SP - Brasil</span>
+                  <span className="text-sm">Tv. Frutuoso Guimarães, 110 - Campina, Belém - PA, 66013-010, Brasil</span>
                 </div>
               </li>
             </ul>

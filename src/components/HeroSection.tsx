@@ -56,9 +56,20 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
-            <Button variant="hero" size="xl" className="group">
-              <Zap className="w-5 h-5 group-hover:animate-shake" />
-              COMPRAR AGORA
+            <Button 
+              variant="hero" 
+              size="xl" 
+              className="group"
+              asChild
+            >
+              <a 
+                href="https://wa.me/559182750788" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Zap className="w-5 h-5 group-hover:animate-shake" />
+                COMPRAR AGORA
+              </a>
             </Button>
             <Button variant="outline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
               Ver Produtos

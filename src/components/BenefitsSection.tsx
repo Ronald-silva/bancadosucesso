@@ -1,4 +1,4 @@
-import { TrendingDown, CreditCard, Truck, HeadphonesIcon, Award } from "lucide-react";
+import { TrendingDown, Truck, HeadphonesIcon, Award } from "lucide-react";
 
 const benefits = [
   {
@@ -6,12 +6,6 @@ const benefits = [
     title: "Preços Mais Baixos",
     description: "Economize mais do que nas lojas físicas, com os melhores preços do mercado online.",
     highlight: "Até 70% OFF",
-  },
-  {
-    icon: CreditCard,
-    title: "Pagamento Flexível",
-    description: "Várias opções de pagamento seguras: PIX, cartão, boleto e parcelamento sem juros.",
-    highlight: "12x sem juros",
   },
   {
     icon: Truck,

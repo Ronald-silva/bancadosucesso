@@ -1,11 +1,6 @@
-import { XCircle, Clock, DollarSign, Search } from "lucide-react";
+import { XCircle, DollarSign, Search } from "lucide-react";
 
 const problems = [
-  {
-    icon: Clock,
-    title: "Perdendo tempo",
-    description: "Horas perdidas em trânsito procurando produtos em lojas físicas",
-  },
   {
     icon: DollarSign,
     title: "Gastando demais",

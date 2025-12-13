@@ -71,8 +71,19 @@ const HeroSection = () => {
                 COMPRAR AGORA
               </a>
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-              Ver Produtos
+            <Button 
+              variant="outline" 
+              size="xl" 
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              asChild
+            >
+              <a 
+                href="https://wa.me/c/559182750788" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Ver Produtos
+              </a>
             </Button>
           </div>
 

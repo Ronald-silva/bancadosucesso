@@ -76,10 +76,14 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-secondary rounded-full" />
-              <span className="text-sm font-medium">Entrega Rápida</span>
+              <span className="text-sm font-medium">10x sem juros</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-success rounded-full" />
+              <span className="text-sm font-medium">Entrega Rápida</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-secondary rounded-full" />
               <span className="text-sm font-medium">+10 Anos no Mercado</span>
             </div>
           </div>

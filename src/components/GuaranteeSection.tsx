@@ -26,8 +26,7 @@ const GuaranteeSection = () => {
                 </h2>
                 
                 <p className="text-muted-foreground text-sm mb-5">
-                  Se você não estiver satisfeito com sua experiência, oferecemos um novo produto 
-                  ou reembolso integral da sua compra. Sem complicações.
+                  Se você não estiver satisfeito com sua experiência, garantimos a substituição do produto ou a devida solução por meio do nosso suporte especializado, de forma simples e transparente.
                 </p>
 
                 <Button variant="cta" size="lg" asChild>

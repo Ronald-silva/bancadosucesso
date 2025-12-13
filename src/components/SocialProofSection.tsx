@@ -9,19 +9,19 @@ const stats = [
 const testimonials = [
   {
     name: "Maria Santos",
-    location: "São Paulo, SP",
+    location: "Belém, PA",
     text: "Encontrei tudo que precisava com preços incríveis! A entrega foi super rápida e o atendimento é excelente.",
     rating: 5,
   },
   {
     name: "João Silva",
-    location: "Rio de Janeiro, RJ",
+    location: "Belém, PA",
     text: "Melhor loja online que já comprei. Produtos de qualidade e o suporte me ajudou em todas as dúvidas.",
     rating: 5,
   },
   {
     name: "Ana Oliveira",
-    location: "Belo Horizonte, MG",
+    location: "Belém, PA",
     text: "Compro há 3 anos e nunca tive problemas. Recomendo para todos os meus amigos e família!",
     rating: 5,
   },

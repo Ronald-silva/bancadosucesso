@@ -28,7 +28,7 @@ const benefits = [
   {
     icon: Award,
     title: "Qualidade garantida",
-    description: "Satisfação garantida ou seu dinheiro de volta.",
+    description: "Satisfação garantida.",
     highlight: "100% garantido",
   },
 ];

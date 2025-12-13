@@ -21,8 +21,8 @@ const benefits = [
   },
   {
     icon: HeadphonesIcon,
-    title: "Suporte 24/7",
-    description: "Nossa equipe está disponível 24 horas por dia, 7 dias por semana para te ajudar.",
+    title: "Suporte 10/6",
+    description: "Nossa equipe está disponível 10 horas por dia, 6 dias por semana para te ajudar.",
     highlight: "Sempre online",
   },
   {

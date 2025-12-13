@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Facebook, Clock } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const FooterSection = () => {
@@ -52,6 +52,12 @@ const FooterSection = () => {
                 <div className="flex items-start gap-2 text-primary-foreground/80">
                   <MapPin className="w-4 h-4 mt-0.5" />
                   <span className="text-sm">Tv. Frutuoso Guimarães, 110 - Campina, Belém - PA, 66013-010, Brasil</span>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-start gap-2 text-primary-foreground/80">
+                  <Clock className="w-4 h-4 mt-0.5" />
+                  <span className="text-sm">Seg a Sex: 08:00 - 18:00</span>
                 </div>
               </li>
             </ul>

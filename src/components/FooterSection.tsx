@@ -41,7 +41,7 @@ const FooterSection = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                <span>Seg a Sex: 08:00 - 18:00</span>
+                <span>Seg a Sex: 08:00 – 18:00 | Sáb: 08:00 – 16:00</span>
               </li>
             </ul>
           </div>

@@ -1,78 +1,55 @@
-import { Check, ShoppingCart, Shield, Truck, Headphones, Gift } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const features = [
-  {
-    icon: ShoppingCart,
-    title: "Produtos de Qualidade",
-    description: "A preços acessíveis para todos",
-  },
-  {
-    icon: Shield,
-    title: "Compra Segura",
-    description: "Pagamento protegido e fácil",
-  },
-  {
-    icon: Truck,
-    title: "Variedade Completa",
-    description: "Tudo em uma só plataforma",
-  },
-  {
-    icon: Headphones,
-    title: "Suporte Personalizado",
-    description: "Atendimento quando precisar",
-  },
-  {
-    icon: Gift,
-    title: "Benefícios Exclusivos",
-    description: "Prêmios e ofertas especiais",
-  },
+  "Produtos de qualidade a preços acessíveis",
+  "Compra segura com pagamento protegido",
+  "Variedade completa em um só lugar",
+  "Suporte dedicado quando precisar",
+  "Benefícios e ofertas exclusivas",
 ];
 
 const SolutionSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-muted/50">
+    <section className="py-16 md:py-20 bg-muted/30">
       <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="inline-block px-4 py-2 bg-success/10 text-success rounded-full text-sm font-semibold mb-4">
-            A SOLUÇÃO
-          </span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">
-            É hora de <span className="text-gradient-gold">aproveitar</span> a melhor opção!
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <p className="text-sm font-medium text-secondary-foreground mb-2 uppercase tracking-wide">
+            A solução
+          </p>
+          <h2 className="font-semibold text-2xl md:text-3xl text-foreground mb-4">
+            Conheça a <span className="text-secondary">Banca do Sucesso</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-body">
-            A <span className="font-bold text-primary">Banca do Sucesso</span> é a loja online 
-            mais completa e barata do Brasil, com opções para todos os gostos e necessidades.
+          <p className="text-muted-foreground">
+            A loja online mais completa e acessível do Brasil, com opções para todos os gostos.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="group p-6 bg-card rounded-2xl border border-border hover:border-success/30 hover:shadow-lg transition-all duration-300"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-success/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-success/20 transition-colors">
-                  <feature.icon className="w-6 h-6 text-success" />
+        <div className="max-w-xl mx-auto mb-10">
+          <ul className="space-y-3">
+            {features.map((feature, index) => (
+              <li 
+                key={index}
+                className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border"
+              >
+                <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                  <Check className="w-3 h-3 text-primary-foreground" />
                 </div>
-                <div>
-                  <h3 className="font-display font-bold text-lg text-foreground mb-1">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm font-body">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+                <span className="text-foreground">{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="text-center">
-          <Button variant="cta" size="xl">
-            <Check className="w-5 h-5" />
-            QUERO APROVEITAR AGORA
+          <Button variant="cta" size="lg" asChild>
+            <a 
+              href="https://wa.me/559182750788" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              Quero aproveitar
+            </a>
           </Button>
         </div>
       </div>

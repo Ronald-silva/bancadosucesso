@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,75 +6,64 @@
 
 @layer base {
   :root {
-    --background: 48 100% 98%;
-    --foreground: 215 80% 20%;
+    --background: 0 0% 100%;
+    --foreground: 215 80% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 80% 20%;
+    --card-foreground: 215 80% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 80% 20%;
+    --popover-foreground: 215 80% 15%;
 
     --primary: 215 85% 35%;
-    --primary-foreground: 48 100% 95%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 48 100% 50%;
     --secondary-foreground: 215 80% 15%;
 
-    --muted: 48 30% 92%;
-    --muted-foreground: 215 30% 40%;
+    --muted: 215 15% 96%;
+    --muted-foreground: 215 20% 45%;
 
-    --accent: 48 100% 55%;
+    --accent: 48 100% 50%;
     --accent-foreground: 215 80% 15%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 145 65% 42%;
-    --success-foreground: 0 0% 100%;
-
-    --border: 215 30% 85%;
-    --input: 215 30% 85%;
+    --border: 215 20% 90%;
+    --input: 215 20% 90%;
     --ring: 215 85% 35%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 25%) 0%, hsl(215 80% 40%) 50%, hsl(215 75% 50%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(48 100% 45%) 0%, hsl(45 100% 55%) 50%, hsl(48 100% 60%) 100%);
-    --gradient-cta: linear-gradient(135deg, hsl(48 100% 50%) 0%, hsl(42 100% 50%) 100%);
-    
-    --shadow-soft: 0 4px 20px -4px hsl(215 85% 35% / 0.15);
-    --shadow-glow: 0 0 40px hsl(48 100% 50% / 0.4);
-    --shadow-card: 0 10px 40px -10px hsl(215 85% 35% / 0.1);
-
-    --font-display: 'Montserrat', sans-serif;
+    --font-display: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
   }
 
   .dark {
     --background: 215 80% 8%;
-    --foreground: 48 100% 95%;
+    --foreground: 0 0% 98%;
 
     --card: 215 70% 12%;
-    --card-foreground: 48 100% 95%;
+    --card-foreground: 0 0% 98%;
 
     --popover: 215 70% 12%;
-    --popover-foreground: 48 100% 95%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 48 100% 50%;
     --primary-foreground: 215 80% 15%;
 
     --secondary: 215 60% 30%;
-    --secondary-foreground: 48 100% 95%;
+    --secondary-foreground: 0 0% 98%;
 
     --muted: 215 50% 18%;
-    --muted-foreground: 48 40% 70%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 48 100% 55%;
+    --accent: 48 100% 50%;
     --accent-foreground: 215 80% 15%;
 
     --destructive: 0 62% 30%;
-    --destructive-foreground: 48 100% 95%;
+    --destructive-foreground: 0 0% 98%;
 
     --border: 215 50% 20%;
     --input: 215 50% 20%;
@@ -88,7 +77,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
   }
 
@@ -99,82 +88,25 @@
 
 @layer utilities {
   .text-gradient-gold {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--secondary));
   }
 
   .bg-gradient-hero {
-    background: var(--gradient-hero);
-  }
-
-  .bg-gradient-cta {
-    background: var(--gradient-cta);
-  }
-
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-
-  .shadow-card {
-    box-shadow: var(--shadow-card);
+    background: hsl(var(--primary));
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(48 100% 50% / 0.4);
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  50% {
-    box-shadow: 0 0 40px hsl(48 100% 50% / 0.6);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
-  50% {
-    transform: translateY(-10px);
-  }
 }
 
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
-  }
-}
-
-@keyframes countdown-pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-.animate-countdown {
-  animation: countdown-pulse 1s ease-in-out infinite;
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
 }

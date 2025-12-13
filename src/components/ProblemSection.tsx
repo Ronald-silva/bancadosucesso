@@ -1,52 +1,40 @@
-import { XCircle, DollarSign, Search } from "lucide-react";
-
 const problems = [
   {
-    icon: DollarSign,
-    title: "Gastando demais",
-    description: "Preços altos que pesam no bolso e comprometem o orçamento",
+    title: "Preços altos",
+    description: "Produtos que pesam no bolso e comprometem seu orçamento mensal.",
   },
   {
-    icon: Search,
-    title: "Sem opções",
-    description: "Falta de variedade e produtos de qualidade acessíveis",
+    title: "Falta de variedade",
+    description: "Dificuldade em encontrar produtos de qualidade com bom custo-benefício.",
   },
 ];
 
 const ProblemSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section className="py-16 md:py-20 bg-background">
       <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-block px-4 py-2 bg-destructive/10 text-destructive rounded-full text-sm font-semibold mb-4">
-            O PROBLEMA
-          </span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">
-            Você está <span className="text-destructive">cansado</span> de...
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <p className="text-sm font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+            O problema
+          </p>
+          <h2 className="font-semibold text-2xl md:text-3xl text-foreground mb-4">
+            Você está cansado de...
           </h2>
-          <p className="text-lg text-muted-foreground font-body">
-            Procurar por produtos em lojas físicas, perdendo tempo e dinheiro em trânsito? 
-            Sentir-se frustrado com a falta de opções e preços acessíveis?
+          <p className="text-muted-foreground">
+            Procurar por produtos e não encontrar opções que cabem no seu bolso?
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {problems.map((problem, index) => (
             <div 
               key={index}
-              className="group relative p-8 bg-card rounded-2xl border-2 border-border hover:border-destructive/30 transition-all duration-300 shadow-card hover:-translate-y-1"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="p-6 bg-muted/50 rounded-lg border border-border"
             >
-              <div className="absolute -top-4 -right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <XCircle className="w-8 h-8 text-destructive" />
-              </div>
-              <div className="w-14 h-14 bg-destructive/10 rounded-xl flex items-center justify-center mb-5">
-                <problem.icon className="w-7 h-7 text-destructive" />
-              </div>
-              <h3 className="font-display font-bold text-xl text-foreground mb-3">
+              <h3 className="font-medium text-foreground mb-2">
                 {problem.title}
               </h3>
-              <p className="text-muted-foreground font-body">
+              <p className="text-sm text-muted-foreground">
                 {problem.description}
               </p>
             </div>

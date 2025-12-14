@@ -36,6 +36,29 @@ const Checkout = () => {
     }).format(value);
   };
 
+  const generateWhatsAppMessage = () => {
+    let message = '🛒 *PEDIDO CONFIRMADO - BANCA DO SUCESSO*\n\n';
+    message += '👤 *Dados do Cliente:*\n';
+    message += `Nome: ${name.trim()}\n`;
+    message += `Email: ${email.trim()}\n`;
+    message += `Telefone: ${phone.trim()}\n`;
+    message += `Endereço: ${address.trim()}\n\n`;
+    message += '📦 *Produtos:*\n';
+    message += '─────────────────\n';
+    
+    items.forEach((item) => {
+      message += `• ${item.name}\n`;
+      message += `  Qtd: ${item.quantity} x ${formatPrice(item.price)}\n`;
+      message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
+    });
+    
+    message += '─────────────────\n';
+    message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
+    message += '_Pedido realizado pelo site Banca do Sucesso_';
+    
+    return encodeURIComponent(message);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -67,7 +90,7 @@ const Checkout = () => {
     setIsLoading(true);
 
     try {
-      // Create order
+      // Create order in database
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
@@ -97,7 +120,16 @@ const Checkout = () => {
 
       if (itemsError) throw itemsError;
 
+      // Generate WhatsApp message and redirect
+      const whatsappMessage = generateWhatsAppMessage();
+      const whatsappNumber = '5591982046875';
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+      
       clearCart();
+      
+      // Open WhatsApp in new tab/window
+      window.open(whatsappUrl, '_blank');
+      
       setOrderSuccess(true);
     } catch (error: any) {
       console.error('Error creating order:', error);

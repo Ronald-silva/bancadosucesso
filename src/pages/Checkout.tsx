@@ -1,32 +1,27 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag, CheckCircle } from 'lucide-react';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import logoImg from '@/assets/logo-banca-sucesso.jpg';
 
 const checkoutSchema = z.object({
   name: z.string().min(2, 'Nome é obrigatório').max(100),
   email: z.string().email('Email inválido').max(255),
   phone: z.string().min(10, 'Telefone inválido').max(20),
-  address: z.string().min(10, 'Endereço é obrigatório').max(500),
 });
 
 const Checkout = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const { items, totalPrice, clearCart } = useCart();
-  const navigate = useNavigate();
   const { toast } = useToast();
 
   const formatPrice = (value: number) => {
@@ -36,37 +31,13 @@ const Checkout = () => {
     }).format(value);
   };
 
-  const generateWhatsAppMessage = () => {
-    let message = '🛒 *PEDIDO CONFIRMADO - BANCA DO SUCESSO*\n\n';
-    message += '👤 *Dados do Cliente:*\n';
-    message += `Nome: ${name.trim()}\n`;
-    message += `Email: ${email.trim()}\n`;
-    message += `Telefone: ${phone.trim()}\n`;
-    message += `Endereço: ${address.trim()}\n\n`;
-    message += '📦 *Produtos:*\n';
-    message += '─────────────────\n';
-    
-    items.forEach((item) => {
-      message += `• ${item.name}\n`;
-      message += `  Qtd: ${item.quantity} x ${formatPrice(item.price)}\n`;
-      message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
-    });
-    
-    message += '─────────────────\n';
-    message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
-    message += '_Pedido realizado pelo site Banca do Sucesso_';
-    
-    return encodeURIComponent(message);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const validation = checkoutSchema.safeParse({
       name,
       email,
       phone,
-      address,
     });
 
     if (!validation.success) {
@@ -89,58 +60,34 @@ const Checkout = () => {
 
     setIsLoading(true);
 
-    try {
-      // Create order in database
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          customer_name: name.trim(),
-          customer_email: email.trim(),
-          customer_phone: phone.trim(),
-          customer_address: address.trim(),
-          total: totalPrice,
-        })
-        .select()
-        .single();
+    // Generate WhatsApp message
+    let message = '🛒 *PEDIDO CONFIRMADO - BANCA DO SUCESSO*\n\n';
+    message += '👤 *Dados do Cliente:*\n';
+    message += `Nome: ${name.trim()}\n`;
+    message += `Email: ${email.trim()}\n`;
+    message += `Telefone: ${phone.trim()}\n\n`;
+    message += '📦 *Produtos:*\n';
+    message += '─────────────────\n';
+    
+    items.forEach((item) => {
+      message += `• ${item.name}\n`;
+      message += `  Qtd: ${item.quantity} x ${formatPrice(item.price)}\n`;
+      message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
+    });
+    
+    message += '─────────────────\n';
+    message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
+    message += '_Pedido realizado pelo site Banca do Sucesso_';
 
-      if (orderError) throw orderError;
-
-      // Create order items
-      const orderItems = items.map((item) => ({
-        order_id: order.id,
-        product_id: item.id,
-        product_name: item.name,
-        quantity: item.quantity,
-        price: item.price,
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) throw itemsError;
-
-      // Generate WhatsApp message and redirect
-      const whatsappMessage = generateWhatsAppMessage();
-      const whatsappNumber = '5591982046875';
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-      
-      clearCart();
-      
-      // Open WhatsApp in new tab/window
-      window.open(whatsappUrl, '_blank');
-      
-      setOrderSuccess(true);
-    } catch (error: any) {
-      console.error('Error creating order:', error);
-      toast({
-        title: 'Erro',
-        description: 'Erro ao processar pedido. Tente novamente.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    const whatsappNumber = '5591982046875';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    clearCart();
+    setOrderSuccess(true);
+    setIsLoading(false);
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
   };
 
   if (orderSuccess) {
@@ -151,10 +98,10 @@ const Checkout = () => {
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-2">
-            Pedido Realizado!
+            Pedido Enviado!
           </h1>
           <p className="text-muted-foreground mb-6">
-            Obrigado pela sua compra! Entraremos em contato em breve para confirmar os detalhes do seu pedido.
+            Seu pedido foi enviado para o WhatsApp da loja. Aguarde a confirmação!
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/produtos">
@@ -253,7 +200,7 @@ const Checkout = () => {
             {/* Checkout Form */}
             <div className="order-1 lg:order-2">
               <h2 className="text-lg font-semibold text-foreground mb-4">
-                Dados para Entrega
+                Seus Dados
               </h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -294,19 +241,6 @@ const Checkout = () => {
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="address">Endereço Completo</Label>
-                  <Textarea
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Rua, número, bairro, cidade, CEP"
-                    className="mt-1"
-                    rows={3}
-                    required
-                  />
-                </div>
-
                 <Button
                   type="submit"
                   disabled={isLoading}
@@ -314,7 +248,7 @@ const Checkout = () => {
                   variant="cta"
                   size="lg"
                 >
-                  {isLoading ? 'Processando...' : 'Confirmar Pedido'}
+                  {isLoading ? 'Enviando...' : 'Confirmar Pedido'}
                 </Button>
               </form>
             </div>

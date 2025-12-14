@@ -1,9 +1,48 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const HeroSection = () => {
+  const { user, isAdmin } = useAuth();
+
   return (
-    <section className="bg-gradient-hero">
+    <section className="bg-gradient-hero relative">
+      {/* Admin/Login Link */}
+      <div className="absolute top-4 right-4">
+        {user ? (
+          isAdmin ? (
+            <Link to="/admin">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
+              >
+                Painel Admin
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/produtos">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
+              >
+                Minha Conta
+              </Button>
+            </Link>
+          )
+        ) : (
+          <Link to="/auth">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
+            >
+              Admin
+            </Button>
+          </Link>
+        )}
       <div className="container py-16 md:py-24">
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
           {/* Logo */}
@@ -41,13 +80,9 @@ const HeroSection = () => {
               size="lg" 
               asChild
             >
-              <a 
-                href="https://wa.me/559182750788" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Comprar agora
-              </a>
+              <Link to="/produtos">
+                Ver Loja Online
+              </Link>
             </Button>
             <Button 
               variant="outline" 
@@ -56,11 +91,11 @@ const HeroSection = () => {
               asChild
             >
               <a 
-                href="https://wa.me/c/559182750788" 
+                href="https://wa.me/559182750788" 
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                Ver produtos
+                Falar no WhatsApp
               </a>
             </Button>
           </div>
@@ -76,6 +111,7 @@ const HeroSection = () => {
             <span>✓ +10 anos no mercado</span>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

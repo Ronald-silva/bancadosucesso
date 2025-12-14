@@ -79,7 +79,7 @@ const Checkout = () => {
     message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
     message += '_Pedido realizado pelo site Banca do Sucesso_';
 
-    const whatsappNumber = '5591982046875';
+    const whatsappNumber = '5591982750788';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     
     clearCart();

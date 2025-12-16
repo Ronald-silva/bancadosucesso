@@ -84,22 +84,22 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground py-4 px-4 sticky top-0 z-30">
+      <header className="bg-primary text-primary-foreground py-3 md:py-4 px-3 md:px-4 sticky top-0 z-30">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Link to="/">
               <img
                 src={logoImg}
                 alt="Banca do Sucesso"
-                className="h-10 w-auto rounded-lg"
+                className="h-8 md:h-10 w-auto rounded-lg"
               />
             </Link>
-            <h1 className="text-xl font-bold hidden sm:block">Produtos</h1>
+            <h1 className="text-lg md:text-xl font-bold hidden sm:block">Produtos</h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             {isAdmin && (
-              <Link to="/admin">
-                <Button variant="outline" size="sm" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Link to="/admin" className="hidden sm:block">
+                <Button variant="outline" size="sm" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-xs md:text-sm">
                   Painel Admin
                 </Button>
               </Link>
@@ -110,7 +110,7 @@ const Products = () => {
       </header>
 
       {/* Search Bar */}
-      <div className="bg-gradient-to-b from-primary to-primary/90 py-6 px-4">
+      <div className="bg-gradient-to-b from-primary to-primary/90 py-4 md:py-6 px-3 md:px-4">
         <div className="max-w-2xl mx-auto">
           <form onSubmit={handleSearch} className="relative flex items-center">
             <input
@@ -118,13 +118,13 @@ const Products = () => {
               value={localSearch}
               onChange={(e) => setLocalSearch(e.target.value)}
               placeholder="Buscar produtos..."
-              className="w-full h-12 pl-5 pr-24 rounded-full bg-primary-foreground text-foreground placeholder:text-muted-foreground border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-lg transition-all duration-300"
+              className="w-full h-10 md:h-12 pl-4 md:pl-5 pr-16 md:pr-24 rounded-full bg-primary-foreground text-foreground placeholder:text-muted-foreground text-sm md:text-base border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-lg transition-all duration-300"
             />
             {localSearch && (
               <button
                 type="button"
                 onClick={clearSearch}
-                className="absolute right-20 p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute right-12 md:right-16 p-1.5 md:p-2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -133,7 +133,7 @@ const Products = () => {
               type="submit"
               variant="hero"
               size="sm"
-              className="absolute right-1.5 h-9 px-4 rounded-full"
+              className="absolute right-1 md:right-1.5 h-8 md:h-9 px-3 md:px-4 rounded-full"
             >
               <Search className="w-4 h-4" />
             </Button>
@@ -142,32 +142,33 @@ const Products = () => {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
+      <main className="max-w-6xl mx-auto px-3 md:px-4 py-6 md:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 md:mb-8">
+          <div className="flex items-center gap-3 md:gap-4">
             <Link
               to="/"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-1.5 md:gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm md:text-base"
             >
               <ArrowLeft className="w-4 h-4" />
-              Voltar
+              <span className="hidden sm:inline">Voltar</span>
             </Link>
             {searchQuery && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs md:text-sm text-muted-foreground">
                 {filteredProducts.length} resultado{filteredProducts.length !== 1 ? 's' : ''} para "{searchQuery}"
               </span>
             )}
           </div>
           {isAdmin && (
-            <Button onClick={() => setShowForm(true)} variant="cta">
-              <Plus className="w-4 h-4 mr-2" />
-              Adicionar Produto
+            <Button onClick={() => setShowForm(true)} variant="cta" size="sm" className="text-xs md:text-sm self-start sm:self-auto">
+              <Plus className="w-4 h-4 mr-1.5 md:mr-2" />
+              <span className="hidden sm:inline">Adicionar Produto</span>
+              <span className="sm:hidden">Adicionar</span>
             </Button>
           )}
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
@@ -176,23 +177,23 @@ const Products = () => {
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="text-center py-12 md:py-16">
             {searchQuery ? (
               <>
-                <p className="text-muted-foreground text-lg mb-4">
+                <p className="text-muted-foreground text-base md:text-lg mb-4 px-4">
                   Nenhum produto encontrado para "{searchQuery}".
                 </p>
-                <Button onClick={clearSearch} variant="outline">
+                <Button onClick={clearSearch} variant="outline" size="sm">
                   Limpar busca
                 </Button>
               </>
             ) : (
               <>
-                <p className="text-muted-foreground text-lg mb-4">
+                <p className="text-muted-foreground text-base md:text-lg mb-4 px-4">
                   Nenhum produto cadastrado ainda.
                 </p>
                 {isAdmin && (
-                  <Button onClick={() => setShowForm(true)} variant="cta">
+                  <Button onClick={() => setShowForm(true)} variant="cta" size="sm">
                     <Plus className="w-4 h-4 mr-2" />
                     Adicionar Primeiro Produto
                   </Button>
@@ -201,7 +202,7 @@ const Products = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {filteredProducts.map((product) =>
               isAdmin ? (
                 <AdminProductCard

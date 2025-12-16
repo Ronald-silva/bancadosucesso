@@ -3,51 +3,51 @@ import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const FooterSection = () => {
   return (
-    <footer className="bg-primary text-primary-foreground py-12">
-      <div className="container">
-        <div className="grid md:grid-cols-3 gap-8 mb-10">
+    <footer className="bg-primary text-primary-foreground py-10 md:py-12">
+      <div className="container px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8 md:mb-10">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
+          <div className="text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
               <img 
                 src={logoImg} 
                 alt="Banca do Sucesso Home Center" 
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover border-2 border-secondary"
               />
               <span className="font-semibold text-lg">
                 Banca do Sucesso
               </span>
             </div>
-            <p className="text-primary-foreground/70 text-sm max-w-xs">
+            <p className="text-primary-foreground/70 text-sm max-w-xs mx-auto sm:mx-0">
               Há mais de 10 anos transformando a experiência de compra online no Brasil.
             </p>
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="text-center sm:text-left">
             <h4 className="font-medium mb-4">Contato</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/70">
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                <span>contato@bancadosucesso.com</span>
+              <li className="flex items-center justify-center sm:justify-start gap-2">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <span className="break-all">contato@bancadosucesso.com</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
+              <li className="flex items-center justify-center sm:justify-start gap-2">
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 <span>+55 (91) 8275-0788</span>
               </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5" />
-                <span>Tv. Frutuoso Guimarães, 110 - Campina, Belém - PA</span>
+              <li className="flex items-center justify-center sm:justify-start gap-2">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs md:text-sm">Tv. Frutuoso Guimarães, 110 - Campina, Belém - PA</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>Seg a Sex: 08:00 – 18:00 | Sáb: 08:00 – 16:00</span>
+              <li className="flex items-center justify-center sm:justify-start gap-2">
+                <Clock className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs md:text-sm">Seg-Sex: 08:00–18:00 | Sáb: 08:00–16:00</span>
               </li>
             </ul>
           </div>
 
           {/* Links */}
-          <div>
+          <div className="text-center sm:text-left">
             <h4 className="font-medium mb-4">Links úteis</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/70">
               <li>
@@ -75,9 +75,9 @@ const FooterSection = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-primary-foreground/10 text-center">
-          <p className="text-sm text-primary-foreground/50">
-            © 2024 Banca do Sucesso. Todos os direitos reservados.
+        <div className="pt-6 md:pt-8 border-t border-primary-foreground/10 text-center">
+          <p className="text-xs md:text-sm text-primary-foreground/50">
+            © 2025 Banca do Sucesso. Todos os direitos reservados.
           </p>
         </div>
       </div>

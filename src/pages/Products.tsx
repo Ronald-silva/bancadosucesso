@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Plus, Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/products/ProductCard';
 import { AdminProductCard } from '@/components/products/AdminProductCard';
@@ -24,7 +24,11 @@ const Products = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [localSearch, setLocalSearch] = useState(searchParams.get('busca') || '');
   const { isAdmin } = useAuth();
+
+  const searchQuery = searchParams.get('busca') || '';
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -44,6 +48,28 @@ const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (localSearch.trim()) {
+      setSearchParams({ busca: localSearch.trim() });
+    } else {
+      setSearchParams({});
+    }
+  };
+
+  const clearSearch = () => {
+    setLocalSearch('');
+    setSearchParams({});
+  };
 
   const handleEdit = (product: Product) => {
     setEditingProduct(product);
@@ -83,16 +109,55 @@ const Products = () => {
         </div>
       </header>
 
+      {/* Search Bar */}
+      <div className="bg-gradient-to-b from-primary to-primary/90 py-6 px-4">
+        <div className="max-w-2xl mx-auto">
+          <form onSubmit={handleSearch} className="relative flex items-center">
+            <input
+              type="text"
+              value={localSearch}
+              onChange={(e) => setLocalSearch(e.target.value)}
+              placeholder="Buscar produtos..."
+              className="w-full h-12 pl-5 pr-24 rounded-full bg-primary-foreground text-foreground placeholder:text-muted-foreground border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-lg transition-all duration-300"
+            />
+            {localSearch && (
+              <button
+                type="button"
+                onClick={clearSearch}
+                className="absolute right-20 p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+            <Button
+              type="submit"
+              variant="hero"
+              size="sm"
+              className="absolute right-1.5 h-9 px-4 rounded-full"
+            >
+              <Search className="w-4 h-4" />
+            </Button>
+          </form>
+        </div>
+      </div>
+
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Voltar
+            </Link>
+            {searchQuery && (
+              <span className="text-sm text-muted-foreground">
+                {filteredProducts.length} resultado{filteredProducts.length !== 1 ? 's' : ''} para "{searchQuery}"
+              </span>
+            )}
+          </div>
           {isAdmin && (
             <Button onClick={() => setShowForm(true)} variant="cta">
               <Plus className="w-4 h-4 mr-2" />
@@ -110,21 +175,34 @@ const Products = () => {
               />
             ))}
           </div>
-        ) : products.length === 0 ? (
+        ) : filteredProducts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg mb-4">
-              Nenhum produto cadastrado ainda.
-            </p>
-            {isAdmin && (
-              <Button onClick={() => setShowForm(true)} variant="cta">
-                <Plus className="w-4 h-4 mr-2" />
-                Adicionar Primeiro Produto
-              </Button>
+            {searchQuery ? (
+              <>
+                <p className="text-muted-foreground text-lg mb-4">
+                  Nenhum produto encontrado para "{searchQuery}".
+                </p>
+                <Button onClick={clearSearch} variant="outline">
+                  Limpar busca
+                </Button>
+              </>
+            ) : (
+              <>
+                <p className="text-muted-foreground text-lg mb-4">
+                  Nenhum produto cadastrado ainda.
+                </p>
+                {isAdmin && (
+                  <Button onClick={() => setShowForm(true)} variant="cta">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Adicionar Primeiro Produto
+                  </Button>
+                )}
+              </>
             )}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {products.map((product) =>
+            {filteredProducts.map((product) =>
               isAdmin ? (
                 <AdminProductCard
                   key={product.id}

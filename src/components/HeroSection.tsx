@@ -1,10 +1,21 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { Search } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const HeroSection = () => {
   const { user, isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/produtos?busca=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   const featuredProducts = [
     { name: "Ferramentas", icon: "🔧" },
@@ -86,11 +97,37 @@ const HeroSection = () => {
 
             {/* Subheadline */}
             <p 
-              className="text-base md:text-lg text-primary-foreground/85 max-w-2xl mb-8 animate-fade-in"
+              className="text-base md:text-lg text-primary-foreground/85 max-w-2xl mb-6 animate-fade-in"
               style={{ animationDelay: "0.2s" }}
             >
               Encontre tudo o que precisa para sua casa e trabalho com preços acessíveis e entrega rápida.
             </p>
+
+            {/* Search Bar */}
+            <form 
+              onSubmit={handleSearch}
+              className="w-full max-w-xl mb-8 animate-fade-in"
+              style={{ animationDelay: "0.25s" }}
+            >
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar produtos..."
+                  className="w-full h-14 pl-5 pr-32 rounded-full bg-primary-foreground/95 text-foreground placeholder:text-muted-foreground border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-xl transition-all duration-300"
+                />
+                <Button
+                  type="submit"
+                  variant="hero"
+                  size="lg"
+                  className="absolute right-1.5 h-11 px-6 rounded-full"
+                >
+                  <Search className="w-5 h-5 mr-2" />
+                  Buscar
+                </Button>
+              </div>
+            </form>
 
             {/* CTA Buttons */}
             <div 

@@ -38,6 +38,11 @@
 
     --font-display: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
+
+    /* Custom brand gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(215 85% 30%) 0%, hsl(215 85% 45%) 50%, hsl(200 80% 40%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(48 100% 50%) 0%, hsl(45 100% 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(215 30% 98%) 100%);
   }
 
   .dark {
@@ -88,11 +93,35 @@
 
 @layer utilities {
   .text-gradient-gold {
-    color: hsl(var(--secondary));
+    background: linear-gradient(135deg, hsl(48 100% 50%) 0%, hsl(40 100% 45%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .bg-gradient-hero {
-    background: hsl(var(--primary));
+    background: linear-gradient(135deg, hsl(215 85% 28%) 0%, hsl(215 80% 38%) 40%, hsl(210 75% 45%) 100%);
+  }
+
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, hsl(48 100% 50%) 0%, hsl(45 100% 55%) 100%);
+  }
+
+  .bg-gradient-card {
+    background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(215 30% 98%) 100%);
+  }
+
+  .border-accent-glow {
+    border-color: hsl(48 100% 50% / 0.5);
+    box-shadow: 0 0 20px hsl(48 100% 50% / 0.15);
+  }
+
+  .shadow-brand {
+    box-shadow: 0 10px 40px -10px hsl(215 85% 35% / 0.25), 0 4px 6px -4px hsl(215 85% 35% / 0.1);
+  }
+
+  .shadow-accent {
+    box-shadow: 0 10px 30px -10px hsl(48 100% 50% / 0.3);
   }
 }
 
@@ -107,6 +136,34 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(48 100% 50% / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(48 100% 50% / 0.5);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, transparent, hsl(48 100% 50% / 0.1), transparent);
+  background-size: 200% 100%;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }

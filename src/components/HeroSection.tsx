@@ -73,23 +73,23 @@ const HeroSection = () => {
           )}
         </div>
 
-        <div className="container py-16 md:py-24 relative z-10">
+        <div className="container px-4 py-12 md:py-24 relative z-10">
           <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
             {/* Logo */}
-            <div className="mb-8 animate-fade-in">
+            <div className="mb-6 md:mb-8 animate-fade-in">
               <div className="relative">
                 <div className="absolute inset-0 bg-secondary/30 rounded-full blur-xl scale-150" />
                 <img 
                   src={logoImg} 
                   alt="Banca do Sucesso Home Center" 
-                  className="relative w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-secondary shadow-xl"
+                  className="relative w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-4 border-secondary shadow-xl"
                 />
               </div>
             </div>
 
             {/* Main Headline */}
             <h1 
-              className="font-bold text-3xl md:text-4xl lg:text-5xl text-primary-foreground leading-tight mb-4 animate-fade-in"
+              className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary-foreground leading-tight mb-3 md:mb-4 animate-fade-in px-2"
               style={{ animationDelay: "0.1s" }}
             >
               O melhor preço da loja, <span className="text-gradient-gold">online</span>
@@ -97,7 +97,7 @@ const HeroSection = () => {
 
             {/* Subheadline */}
             <p 
-              className="text-base md:text-lg text-primary-foreground/85 max-w-2xl mb-6 animate-fade-in"
+              className="text-sm sm:text-base md:text-lg text-primary-foreground/85 max-w-2xl mb-5 md:mb-6 animate-fade-in px-4"
               style={{ animationDelay: "0.2s" }}
             >
               Encontre tudo o que precisa para sua casa e trabalho com preços acessíveis e entrega rápida.
@@ -106,7 +106,7 @@ const HeroSection = () => {
             {/* Search Bar */}
             <form 
               onSubmit={handleSearch}
-              className="w-full max-w-xl mb-8 animate-fade-in"
+              className="w-full max-w-xl mb-6 md:mb-8 animate-fade-in px-2"
               style={{ animationDelay: "0.25s" }}
             >
               <div className="relative flex items-center">
@@ -115,30 +115,30 @@ const HeroSection = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Buscar produtos..."
-                  className="w-full h-14 pl-5 pr-32 rounded-full bg-primary-foreground/95 text-foreground placeholder:text-muted-foreground border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-xl transition-all duration-300"
+                  className="w-full h-12 md:h-14 pl-4 md:pl-5 pr-14 md:pr-32 rounded-full bg-primary-foreground/95 text-foreground placeholder:text-muted-foreground text-sm md:text-base border-2 border-secondary/50 focus:border-secondary focus:outline-none focus:ring-4 focus:ring-secondary/20 shadow-xl transition-all duration-300"
                 />
                 <Button
                   type="submit"
                   variant="hero"
-                  size="lg"
-                  className="absolute right-1.5 h-11 px-6 rounded-full"
+                  size="sm"
+                  className="absolute right-1.5 h-9 md:h-11 px-3 md:px-6 rounded-full"
                 >
-                  <Search className="w-5 h-5 mr-2" />
-                  Buscar
+                  <Search className="w-4 h-4 md:w-5 md:h-5" />
+                  <span className="hidden sm:inline ml-2">Buscar</span>
                 </Button>
               </div>
             </form>
 
             {/* CTA Buttons */}
             <div 
-              className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-in"
+              className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-8 md:mb-10 animate-fade-in w-full sm:w-auto px-4 sm:px-0"
               style={{ animationDelay: "0.3s" }}
             >
               <Button 
                 variant="hero" 
-                size="xl" 
+                size="lg" 
                 asChild
-                className="animate-pulse-glow"
+                className="animate-pulse-glow w-full sm:w-auto text-sm md:text-base"
               >
                 <Link to="/produtos">
                   Ver Loja Online
@@ -146,8 +146,8 @@ const HeroSection = () => {
               </Button>
               <Button 
                 variant="outline" 
-                size="xl" 
-                className="border-2 border-primary-foreground/30 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 hover:text-primary-foreground hover:border-secondary"
+                size="lg" 
+                className="border-2 border-primary-foreground/30 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 hover:text-primary-foreground hover:border-secondary w-full sm:w-auto text-sm md:text-base"
                 asChild
               >
                 <a 
@@ -162,18 +162,18 @@ const HeroSection = () => {
 
             {/* Trust badges */}
             <div 
-              className="flex flex-wrap justify-center gap-x-6 gap-y-3 animate-fade-in"
+              className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 md:gap-3 animate-fade-in px-2"
               style={{ animationDelay: "0.4s" }}
             >
               {[
                 { icon: "✓", text: "Compra segura" },
                 { icon: "✓", text: "10x sem juros" },
                 { icon: "✓", text: "Entrega rápida" },
-                { icon: "✓", text: "+10 anos no mercado" },
+                { icon: "✓", text: "+10 anos" },
               ].map((badge, index) => (
                 <span 
                   key={index}
-                  className="inline-flex items-center gap-2 bg-primary-foreground/10 px-4 py-2 rounded-full text-sm text-primary-foreground border border-primary-foreground/20"
+                  className="inline-flex items-center justify-center gap-1.5 md:gap-2 bg-primary-foreground/10 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm text-primary-foreground border border-primary-foreground/20"
                 >
                   <span className="text-secondary font-bold">{badge.icon}</span>
                   {badge.text}
@@ -188,24 +188,24 @@ const HeroSection = () => {
       </section>
 
       {/* Featured Categories Section */}
-      <section className="bg-primary py-12 md:py-16 relative overflow-hidden">
+      <section className="bg-primary py-10 md:py-16 relative overflow-hidden">
         {/* Decorative accent line */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-secondary to-transparent" />
         
-        <div className="container relative z-10">
-          <h2 className="text-center text-2xl md:text-3xl font-bold text-primary-foreground mb-8">
+        <div className="container px-4 relative z-10">
+          <h2 className="text-center text-xl md:text-3xl font-bold text-primary-foreground mb-6 md:mb-8">
             Nossas <span className="text-gradient-gold">Categorias</span>
           </h2>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 mb-8 md:mb-10">
             {featuredProducts.map((category, index) => (
               <Link
                 key={index}
                 to="/produtos"
-                className="group bg-primary-foreground/10 hover:bg-secondary border border-primary-foreground/20 hover:border-secondary rounded-xl p-5 text-center transition-all duration-300 hover:scale-105 hover:shadow-accent"
+                className="group bg-primary-foreground/10 hover:bg-secondary border border-primary-foreground/20 hover:border-secondary rounded-lg md:rounded-xl p-3 md:p-5 text-center transition-all duration-300 hover:scale-105 hover:shadow-accent"
               >
-                <span className="text-4xl mb-3 block transition-transform duration-300 group-hover:scale-110">{category.icon}</span>
-                <span className="text-primary-foreground group-hover:text-secondary-foreground font-medium text-sm transition-colors duration-300">{category.name}</span>
+                <span className="text-2xl md:text-4xl mb-2 md:mb-3 block transition-transform duration-300 group-hover:scale-110">{category.icon}</span>
+                <span className="text-primary-foreground group-hover:text-secondary-foreground font-medium text-xs md:text-sm transition-colors duration-300 line-clamp-1">{category.name}</span>
               </Link>
             ))}
           </div>
@@ -213,8 +213,9 @@ const HeroSection = () => {
           <div className="text-center">
             <Button 
               variant="hero" 
-              size="xl" 
+              size="lg" 
               asChild
+              className="text-sm md:text-base"
             >
               <Link to="/produtos">
                 Ver Todos os Produtos

@@ -27,12 +27,32 @@ const Admin = () => {
   useEffect(() => {
     if (!authLoading) {
       if (!user) {
-        console.log('No user, redirecting to auth');
         navigate('/auth', { replace: true });
       } else if (!isAdmin) {
-        console.log('User is not admin, redirecting to auth');
         navigate('/auth', { replace: true });
       }
+    }
+  }, [user, isAdmin, authLoading, navigate]);
+
+  // Server-side verification of admin role on component mount
+  useEffect(() => {
+    const verifyAdminAccess = async () => {
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+      
+      if (!data) {
+        navigate('/auth', { replace: true });
+      }
+    };
+    
+    if (!authLoading && user && isAdmin) {
+      verifyAdminAccess();
     }
   }, [user, isAdmin, authLoading, navigate]);
 

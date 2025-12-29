@@ -7,7 +7,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import logoImg from '@/assets/logo-banca-sucesso.jpg';
+
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image_url?: string | null;
+}
 
 const checkoutSchema = z.object({
   name: z.string().min(2, 'Nome é obrigatório').max(100),
@@ -31,7 +40,38 @@ const Checkout = () => {
     }).format(value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Verify cart prices against database to prevent manipulation
+  const verifyCartPrices = async (cartItems: CartItem[]) => {
+    const productIds = cartItems.map(item => item.id);
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('id, name, price')
+      .in('id', productIds);
+    
+    if (error || !products) {
+      throw new Error('Erro ao verificar preços dos produtos');
+    }
+    
+    // Verify each item price matches database
+    for (const item of cartItems) {
+      const dbProduct = products.find(p => p.id === item.id);
+      if (!dbProduct) {
+        throw new Error(`Produto "${item.name}" não encontrado ou foi removido`);
+      }
+      // Check price difference (allow tiny floating point differences)
+      if (Math.abs(Number(dbProduct.price) - item.price) > 0.01) {
+        throw new Error('Os preços foram atualizados. Por favor, atualize seu carrinho.');
+      }
+      // Verify product name hasn't been tampered
+      if (dbProduct.name !== item.name) {
+        throw new Error('Informações do produto foram alteradas. Atualize seu carrinho.');
+      }
+    }
+    
+    return products;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validation = checkoutSchema.safeParse({
@@ -60,34 +100,46 @@ const Checkout = () => {
 
     setIsLoading(true);
 
-    // Generate WhatsApp message
-    let message = '🛒 *PEDIDO CONFIRMADO - BANCA DO SUCESSO*\n\n';
-    message += '👤 *Dados do Cliente:*\n';
-    message += `Nome: ${name.trim()}\n`;
-    message += `Email: ${email.trim()}\n`;
-    message += `Telefone: ${phone.trim()}\n\n`;
-    message += '📦 *Produtos:*\n';
-    message += '─────────────────\n';
-    
-    items.forEach((item) => {
-      message += `• ${item.name}\n`;
-      message += `  Qtd: ${item.quantity} x ${formatPrice(item.price)}\n`;
-      message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
-    });
-    
-    message += '─────────────────\n';
-    message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
-    message += '_Pedido realizado pelo site Banca do Sucesso_';
+    try {
+      // Verify prices before generating WhatsApp message
+      await verifyCartPrices(items as CartItem[]);
 
-    const whatsappNumber = '5591982750788';
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    
-    clearCart();
-    setOrderSuccess(true);
-    setIsLoading(false);
-    
-    // Open WhatsApp
-    window.open(whatsappUrl, '_blank');
+      // Generate WhatsApp message with verified prices
+      let message = '🛒 *PEDIDO CONFIRMADO - BANCA DO SUCESSO*\n\n';
+      message += '👤 *Dados do Cliente:*\n';
+      message += `Nome: ${name.trim()}\n`;
+      message += `Email: ${email.trim()}\n`;
+      message += `Telefone: ${phone.trim()}\n\n`;
+      message += '📦 *Produtos:*\n';
+      message += '─────────────────\n';
+      
+      items.forEach((item) => {
+        message += `• ${item.name}\n`;
+        message += `  Qtd: ${item.quantity} x ${formatPrice(item.price)}\n`;
+        message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
+      });
+      
+      message += '─────────────────\n';
+      message += `💰 *TOTAL: ${formatPrice(totalPrice)}*\n\n`;
+      message += '_Pedido realizado pelo site Banca do Sucesso_';
+
+      const whatsappNumber = '5591982750788';
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      
+      clearCart();
+      setOrderSuccess(true);
+      
+      // Open WhatsApp
+      window.open(whatsappUrl, '_blank');
+    } catch (error: any) {
+      toast({
+        title: 'Erro de validação',
+        description: error.message || 'Erro ao processar pedido.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (orderSuccess) {

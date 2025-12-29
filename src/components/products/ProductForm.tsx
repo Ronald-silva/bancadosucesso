@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-
+import { mapDatabaseError } from '@/lib/errorMapper';
 interface ProductFormProps {
   onClose: () => void;
   onSuccess: () => void;
@@ -120,7 +120,7 @@ export const ProductForm = ({ onClose, onSuccess, editProduct }: ProductFormProp
       console.error('Error saving product:', error);
       toast({
         title: 'Erro',
-        description: error.message || 'Erro ao salvar o produto.',
+        description: mapDatabaseError(error),
         variant: 'destructive',
       });
     } finally {

@@ -1,24 +1,22 @@
-import HeroSection from "@/components/HeroSection";
+import Header from "@/components/Header";
+import HeroBanner from "@/components/HeroBanner";
+import CategoriesSection from "@/components/CategoriesSection";
 import FeaturedProductsSection from "@/components/FeaturedProductsSection";
-import ProblemSection from "@/components/ProblemSection";
-import SolutionSection from "@/components/SolutionSection";
-import BenefitsSection from "@/components/BenefitsSection";
-import SocialProofSection from "@/components/SocialProofSection";
-import GuaranteeSection from "@/components/GuaranteeSection";
+import TrustBadgesSection from "@/components/TrustBadgesSection";
 import FooterSection from "@/components/FooterSection";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
-      <HeroSection />
-      <FeaturedProductsSection />
-      <ProblemSection />
-      <SolutionSection />
-      <BenefitsSection />
-      <SocialProofSection />
-      <GuaranteeSection />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <HeroBanner />
+        <TrustBadgesSection />
+        <CategoriesSection />
+        <FeaturedProductsSection />
+      </main>
       <FooterSection />
-    </main>
+    </div>
   );
 };
 

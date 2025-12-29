@@ -1,7 +1,7 @@
 import { Star, Users, ShoppingBag, ThumbsUp } from "lucide-react";
 
 const stats = [
-  { icon: Users, value: "10+", label: "Anos de experiência" },
+  { icon: Users, value: "25+", label: "Anos de experiência" },
   { icon: ShoppingBag, value: "50.000+", label: "Produtos vendidos" },
   { icon: ThumbsUp, value: "98%", label: "Clientes satisfeitos" },
 ];

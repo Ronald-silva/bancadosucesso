@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
-import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
-  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -35,23 +32,6 @@ const HeroSection = () => {
           <div className="absolute top-20 left-10 w-72 h-72 bg-secondary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-foreground/5 rounded-full blur-3xl" />
-        </div>
-
-        {/* Admin/Login Link */}
-        <div className="absolute top-4 right-4 z-10">
-          <Link
-            to={user && isAdmin ? "/admin" : "/auth"}
-            aria-label="Acessar área administrativa"
-            onClick={() => {
-              console.log("[nav] adm click ->", user && isAdmin ? "/admin" : "/auth");
-            }}
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
-            )}
-          >
-            {user && isAdmin ? "Painel" : "Adm"}
-          </Link>
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

@@ -19,24 +19,31 @@ interface Order {
 const Admin = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [productCount, setProductCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const { user, isAdmin, isLoading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
 
+  // Redirect non-admin users to auth page
   useEffect(() => {
-    if (!authLoading && (!user || !isAdmin)) {
-      navigate('/auth');
+    if (!authLoading) {
+      if (!user) {
+        console.log('No user, redirecting to auth');
+        navigate('/auth', { replace: true });
+      } else if (!isAdmin) {
+        console.log('User is not admin, redirecting to auth');
+        navigate('/auth', { replace: true });
+      }
     }
   }, [user, isAdmin, authLoading, navigate]);
 
   useEffect(() => {
-    if (isAdmin) {
+    if (user && isAdmin) {
       fetchData();
     }
-  }, [isAdmin]);
+  }, [user, isAdmin]);
 
   const fetchData = async () => {
-    setIsLoading(true);
+    setIsPageLoading(true);
     
     const [ordersResult, productsResult] = await Promise.all([
       supabase
@@ -54,7 +61,7 @@ const Admin = () => {
       setProductCount(productsResult.count);
     }
     
-    setIsLoading(false);
+    setIsPageLoading(false);
   };
 
   const formatPrice = (value: number) => {
@@ -179,7 +186,7 @@ const Admin = () => {
             <h2 className="text-lg font-semibold text-foreground">Pedidos Recentes</h2>
           </div>
           
-          {isLoading ? (
+          {isPageLoading ? (
             <div className="p-8 text-center text-muted-foreground">
               Carregando pedidos...
             </div>

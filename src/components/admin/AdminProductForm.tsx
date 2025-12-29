@@ -3,6 +3,7 @@ import { X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -32,6 +33,7 @@ interface AdminProductFormProps {
   editProduct?: {
     id: string;
     name: string;
+    description: string | null;
     price: number;
     image_url: string | null;
     category_id: string | null;
@@ -45,6 +47,7 @@ export const AdminProductForm = ({
   editProduct,
 }: AdminProductFormProps) => {
   const [name, setName] = useState(editProduct?.name || "");
+  const [description, setDescription] = useState(editProduct?.description || "");
   const [price, setPrice] = useState(editProduct?.price?.toString() || "");
   const [categoryId, setCategoryId] = useState(editProduct?.category_id || "");
   const [subcategoryId, setSubcategoryId] = useState(editProduct?.subcategory_id || "");
@@ -164,6 +167,7 @@ export const AdminProductForm = ({
 
       const productData = {
         name: name.trim(),
+        description: description.trim() || null,
         price: priceValue,
         image_url: imageUrl,
         category_id: categoryId || null,
@@ -269,6 +273,17 @@ export const AdminProductForm = ({
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Camiseta Azul"
               className="mt-1"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="description">Descrição do Produto</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Descreva o produto em detalhes..."
+              className="mt-1 min-h-[100px]"
             />
           </div>
 

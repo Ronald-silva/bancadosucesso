@@ -145,7 +145,7 @@ const HeroSection = () => {
                 { icon: "✓", text: "Compra segura" },
                 { icon: "✓", text: "10x sem juros" },
                 { icon: "✓", text: "Entrega rápida" },
-                { icon: "✓", text: "+10 anos" },
+                { icon: "✓", text: "+25 anos" },
               ].map((badge, index) => (
                 <span 
                   key={index}

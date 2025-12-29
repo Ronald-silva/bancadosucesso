@@ -19,7 +19,7 @@ const FooterSection = () => {
               </span>
             </div>
             <p className="text-primary-foreground/70 text-sm max-w-xs mx-auto sm:mx-0">
-              Há mais de 10 anos transformando a experiência de compra online no Brasil.
+              Há mais de 25 anos transformando a experiência de compra online no Brasil.
             </p>
           </div>
 

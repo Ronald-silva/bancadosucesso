@@ -18,12 +18,11 @@ const HeroSection = () => {
   };
 
   const featuredProducts = [
-    { name: "Ferramentas", icon: "🔧" },
-    { name: "Materiais", icon: "🧱" },
-    { name: "Elétrica", icon: "💡" },
-    { name: "Hidráulica", icon: "🚿" },
-    { name: "Linhas de Crochê", icon: "🧶" },
-    { name: "Papéis", icon: "📄" },
+    { name: "Material de construção", icon: "🏗️" },
+    { name: "Material de informática", icon: "💻" },
+    { name: "Material de escritório", icon: "📎" },
+    { name: "Armarinho", icon: "🧵" },
+    { name: "Impressão", icon: "🖨️" },
   ];
 
   return (
@@ -144,7 +143,6 @@ const HeroSection = () => {
             >
               {[
                 { icon: "✓", text: "Compra segura" },
-                { icon: "✓", text: "10x sem juros" },
                 { icon: "✓", text: "Entrega rápida" },
                 { icon: "✓", text: "+25 anos" },
               ].map((badge, index) => (
@@ -174,7 +172,7 @@ const HeroSection = () => {
             Nossas <span className="text-gradient-gold">Categorias</span>
           </h2>
           
-          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 mb-8 md:mb-10">
+          <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-5 gap-2 md:gap-4 mb-8 md:mb-10">
             {featuredProducts.map((category, index) => (
               <Link
                 key={index}

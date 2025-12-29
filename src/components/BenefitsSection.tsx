@@ -10,8 +10,8 @@ const benefits = [
   {
     icon: CreditCard,
     title: "Pagamento flexível",
-    description: "PIX, cartão e parcelamento sem juros.",
-    highlight: "10x sem juros",
+    description: "PIX, cartão e parcelamento.",
+    highlight: "Várias formas de pagamento",
   },
   {
     icon: Truck,

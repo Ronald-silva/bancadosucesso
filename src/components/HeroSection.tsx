@@ -38,7 +38,7 @@ const HeroSection = () => {
 
         {/* Admin/Login Link */}
         <div className="absolute top-4 right-4 z-10">
-          <Link to="/admin">
+          <Link to={user && isAdmin ? "/admin" : "/auth"}>
             <Button
               variant="outline"
               size="sm"

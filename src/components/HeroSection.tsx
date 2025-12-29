@@ -143,7 +143,7 @@ const HeroSection = () => {
             >
               {[
                 { icon: "✓", text: "Compra segura" },
-                { icon: "✓", text: "Entrega rápida" },
+                { icon: "✓", text: "Atendimento rápido" },
                 { icon: "✓", text: "+25 anos" },
               ].map((badge, index) => (
                 <span 

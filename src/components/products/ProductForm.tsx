@@ -25,9 +25,34 @@ export const ProductForm = ({ onClose, onSuccess, editProduct }: ProductFormProp
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file type
+      if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        toast({
+          title: 'Formato não suportado',
+          description: 'Use apenas imagens JPG, PNG, WebP ou GIF. Arquivos HEIC não são compatíveis com navegadores.',
+          variant: 'destructive',
+        });
+        e.target.value = '';
+        return;
+      }
+
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        toast({
+          title: 'Arquivo muito grande',
+          description: 'A imagem deve ter no máximo 5MB.',
+          variant: 'destructive',
+        });
+        e.target.value = '';
+        return;
+      }
+
       setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => {
@@ -199,7 +224,7 @@ export const ProductForm = ({ onClose, onSuccess, editProduct }: ProductFormProp
                   <input
                     id="image"
                     type="file"
-                    accept="image/*"
+                    accept=".jpg,.jpeg,.png,.webp,.gif"
                     onChange={handleImageChange}
                     className="hidden"
                   />

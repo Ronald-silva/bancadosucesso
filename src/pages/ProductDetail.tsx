@@ -118,6 +118,13 @@ const ProductDetail = () => {
                 {product.name}
               </h1>
 
+              <p className="text-2xl md:text-3xl font-bold text-primary mb-6">
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(product.price)}
+              </p>
+
               {product.description ? (
                 <div className="prose prose-sm max-w-none">
                   <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">

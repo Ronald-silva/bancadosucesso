@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { mapDatabaseError } from '@/lib/errorMapper';
 import logoImg from '@/assets/logo-banca-sucesso.jpg';
 
 const authSchema = z.object({
@@ -46,13 +47,7 @@ const Auth = () => {
       const { error } = await signIn(email.trim(), password);
       
       if (error) {
-        if (error.message.includes('Invalid login credentials')) {
-          setErrorMessage('Email ou senha incorretos. Verifique suas credenciais.');
-        } else if (error.message.includes('Email not confirmed')) {
-          setErrorMessage('Email não confirmado. Verifique sua caixa de entrada.');
-        } else {
-          setErrorMessage(error.message);
-        }
+        setErrorMessage(mapDatabaseError(error));
         return;
       }
       

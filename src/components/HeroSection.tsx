@@ -38,39 +38,15 @@ const HeroSection = () => {
 
         {/* Admin/Login Link */}
         <div className="absolute top-4 right-4 z-10">
-          {user ? (
-            isAdmin ? (
-              <Link to="/admin">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
-                >
-                  Painel Admin
-                </Button>
-              </Link>
-            ) : (
-              <Link to="/produtos">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
-                >
-                  Minha Conta
-                </Button>
-              </Link>
-            )
-          ) : (
-            <Link to="/auth">
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
-              >
-                Admin
-              </Button>
-            </Link>
-          )}
+          <Link to="/admin">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
+            >
+              {user && isAdmin ? "Painel Admin" : "Admin"}
+            </Button>
+          </Link>
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

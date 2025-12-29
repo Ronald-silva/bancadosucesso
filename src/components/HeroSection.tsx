@@ -22,8 +22,8 @@ const HeroSection = () => {
     { name: "Materiais", icon: "🧱" },
     { name: "Elétrica", icon: "💡" },
     { name: "Hidráulica", icon: "🚿" },
-    { name: "Pintura", icon: "🎨" },
-    { name: "Jardim", icon: "🌱" },
+    { name: "Linhas de Crochê", icon: "🧶" },
+    { name: "Papéis", icon: "📄" },
   ];
 
   return (

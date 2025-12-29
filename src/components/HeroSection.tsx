@@ -44,7 +44,7 @@ const HeroSection = () => {
               size="sm"
               className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
             >
-              {user && isAdmin ? "Painel Admin" : "Admin"}
+              {user && isAdmin ? "Painel" : "Adm"}
             </Button>
           </Link>
         </div>

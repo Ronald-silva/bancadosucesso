@@ -18,15 +18,19 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, user, isAdmin, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    if (user) {
-      navigate('/');
+    if (!authLoading && user) {
+      if (isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     }
-  }, [user, navigate]);
+  }, [user, isAdmin, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +70,7 @@ const Auth = () => {
           title: 'Bem-vindo!',
           description: 'Login realizado com sucesso.',
         });
-        navigate('/');
+        // useEffect will handle redirect based on isAdmin
       } else {
         const { error } = await signUp(email, password);
         if (error) {
@@ -89,7 +93,7 @@ const Auth = () => {
           title: 'Conta criada!',
           description: 'Sua conta foi criada com sucesso.',
         });
-        navigate('/');
+        // useEffect will handle redirect
       }
     } finally {
       setIsLoading(false);

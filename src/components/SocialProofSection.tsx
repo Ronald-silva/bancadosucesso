@@ -54,7 +54,7 @@ const SocialProofSection = () => {
             O que nossos clientes dizem
           </h2>
           <p className="text-primary-foreground/70">
-            Mais de 10 anos garantindo a satisfação de milhares de clientes.
+            Mais de 25 anos garantindo a satisfação de milhares de clientes.
           </p>
         </div>
 

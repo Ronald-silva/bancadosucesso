@@ -38,15 +38,19 @@ const HeroSection = () => {
 
         {/* Admin/Login Link */}
         <div className="absolute top-4 right-4 z-10">
-          <Link to={user && isAdmin ? "/admin" : "/auth"}>
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
+          >
+            <Link
+              to={user && isAdmin ? "/admin" : "/auth"}
+              aria-label="Acessar área administrativa"
             >
               {user && isAdmin ? "Painel" : "Adm"}
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

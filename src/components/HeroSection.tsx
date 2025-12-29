@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Search } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
+import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   const { user, isAdmin } = useAuth();
@@ -38,19 +39,19 @@ const HeroSection = () => {
 
         {/* Admin/Login Link */}
         <div className="absolute top-4 right-4 z-10">
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
+          <Link
+            to={user && isAdmin ? "/admin" : "/auth"}
+            aria-label="Acessar área administrativa"
+            onClick={() => {
+              console.log("[nav] adm click ->", user && isAdmin ? "/admin" : "/auth");
+            }}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "border-secondary/50 text-primary-foreground bg-primary-foreground/10 hover:bg-secondary hover:text-secondary-foreground hover:border-secondary"
+            )}
           >
-            <Link
-              to={user && isAdmin ? "/admin" : "/auth"}
-              aria-label="Acessar área administrativa"
-            >
-              {user && isAdmin ? "Painel" : "Adm"}
-            </Link>
-          </Button>
+            {user && isAdmin ? "Painel" : "Adm"}
+          </Link>
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

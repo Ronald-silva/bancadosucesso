@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Package, ShoppingCart, Users } from 'lucide-react';
+import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import logoImg from '@/assets/logo-banca-sucesso.jpg';
+import { CategoryManager } from '@/components/admin/CategoryManager';
+import { SubcategoryManager } from '@/components/admin/SubcategoryManager';
+import { AdminProductForm } from '@/components/admin/AdminProductForm';
 
 interface Order {
   id: string;
@@ -20,6 +24,7 @@ const Admin = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [productCount, setProductCount] = useState(0);
   const [isPageLoading, setIsPageLoading] = useState(true);
+  const [showProductForm, setShowProductForm] = useState(false);
   const { user, isAdmin, isLoading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -154,116 +159,167 @@ const Admin = () => {
           Voltar ao Site
         </Link>
 
-        {/* Stats */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-border rounded-lg p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Package className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Produtos</p>
-                <p className="text-2xl font-bold text-foreground">{productCount}</p>
-              </div>
-            </div>
-            <Link to="/produtos" className="mt-4 block">
-              <Button variant="outline" size="sm" className="w-full">
-                Gerenciar Produtos
-              </Button>
-            </Link>
-          </div>
+        {/* Admin Tabs */}
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="overview">Visão Geral</TabsTrigger>
+            <TabsTrigger value="products">Produtos</TabsTrigger>
+            <TabsTrigger value="categories">Categorias</TabsTrigger>
+            <TabsTrigger value="subcategories">Subcategorias</TabsTrigger>
+          </TabsList>
 
-          <div className="bg-card border border-border rounded-lg p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
-                <ShoppingCart className="w-6 h-6 text-secondary-foreground" />
+          {/* Overview Tab */}
+          <TabsContent value="overview" className="space-y-6">
+            {/* Stats */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="bg-card border border-border rounded-lg p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Package className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Produtos</p>
+                    <p className="text-2xl font-bold text-foreground">{productCount}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Pedidos</p>
-                <p className="text-2xl font-bold text-foreground">{orders.length}</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="bg-card border border-border rounded-lg p-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-muted-foreground" />
+              <div className="bg-card border border-border rounded-lg p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center">
+                    <ShoppingCart className="w-6 h-6 text-secondary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Pedidos</p>
+                    <p className="text-2xl font-bold text-foreground">{orders.length}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Admin</p>
-                <p className="text-sm font-medium text-foreground truncate max-w-32">
-                  {user?.email}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Recent Orders */}
-        <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <div className="p-4 border-b border-border">
-            <h2 className="text-lg font-semibold text-foreground">Pedidos Recentes</h2>
-          </div>
-          
-          {isPageLoading ? (
-            <div className="p-8 text-center text-muted-foreground">
-              Carregando pedidos...
+              <div className="bg-card border border-border rounded-lg p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center">
+                    <Users className="w-6 h-6 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Admin</p>
+                    <p className="text-sm font-medium text-foreground truncate max-w-32">
+                      {user?.email}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          ) : orders.length === 0 ? (
-            <div className="p-8 text-center text-muted-foreground">
-              Nenhum pedido ainda.
+
+            {/* Recent Orders */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="p-4 border-b border-border">
+                <h2 className="text-lg font-semibold text-foreground">Pedidos Recentes</h2>
+              </div>
+              
+              {isPageLoading ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  Carregando pedidos...
+                </div>
+              ) : orders.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  Nenhum pedido ainda.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-muted">
+                      <tr>
+                        <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                          Cliente
+                        </th>
+                        <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                          Contato
+                        </th>
+                        <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                          Total
+                        </th>
+                        <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                          Status
+                        </th>
+                        <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                          Data
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr key={order.id} className="border-b border-border last:border-0">
+                          <td className="p-4">
+                            <p className="font-medium text-foreground">{order.customer_name}</p>
+                            <p className="text-sm text-muted-foreground">{order.customer_email}</p>
+                          </td>
+                          <td className="p-4 text-sm text-foreground">
+                            {order.customer_phone}
+                          </td>
+                          <td className="p-4 font-bold text-primary">
+                            {formatPrice(order.total)}
+                          </td>
+                          <td className="p-4">
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
+                              {order.status}
+                            </span>
+                          </td>
+                          <td className="p-4 text-sm text-muted-foreground">
+                            {formatDate(order.created_at)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-muted">
-                  <tr>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">
-                      Cliente
-                    </th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">
-                      Contato
-                    </th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">
-                      Total
-                    </th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">
-                      Status
-                    </th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">
-                      Data
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order.id} className="border-b border-border last:border-0">
-                      <td className="p-4">
-                        <p className="font-medium text-foreground">{order.customer_name}</p>
-                        <p className="text-sm text-muted-foreground">{order.customer_email}</p>
-                      </td>
-                      <td className="p-4 text-sm text-foreground">
-                        {order.customer_phone}
-                      </td>
-                      <td className="p-4 font-bold text-primary">
-                        {formatPrice(order.total)}
-                      </td>
-                      <td className="p-4">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                          {order.status}
-                        </span>
-                      </td>
-                      <td className="p-4 text-sm text-muted-foreground">
-                        {formatDate(order.created_at)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          </TabsContent>
+
+          {/* Products Tab */}
+          <TabsContent value="products" className="space-y-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-foreground">Gerenciar Produtos</h3>
+                <Button onClick={() => setShowProductForm(true)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Novo Produto
+                </Button>
+              </div>
+              <p className="text-muted-foreground">
+                Use o formulário para adicionar novos produtos com categoria e subcategoria.
+              </p>
+              <Link to="/produtos" className="mt-4 block">
+                <Button variant="outline" className="w-full">
+                  Ver Todos os Produtos
+                </Button>
+              </Link>
             </div>
-          )}
-        </div>
+          </TabsContent>
+
+          {/* Categories Tab */}
+          <TabsContent value="categories" className="space-y-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <CategoryManager />
+            </div>
+          </TabsContent>
+
+          {/* Subcategories Tab */}
+          <TabsContent value="subcategories" className="space-y-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <SubcategoryManager />
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Product Form Modal */}
+        {showProductForm && (
+          <AdminProductForm
+            onClose={() => setShowProductForm(false)}
+            onSuccess={() => fetchData()}
+          />
+        )}
       </main>
     </div>
   );

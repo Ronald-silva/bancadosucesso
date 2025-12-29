@@ -18,11 +18,11 @@ const HeroSection = () => {
   };
 
   const featuredProducts = [
-    { name: "Material de construção", icon: "🏗️" },
-    { name: "Material de informática", icon: "💻" },
-    { name: "Material de escritório", icon: "📎" },
-    { name: "Armarinho", icon: "🧵" },
-    { name: "Impressão", icon: "🖨️" },
+    { name: "Material de construção", icon: "🏗️", slug: "material-de-construcao" },
+    { name: "Material de informática", icon: "💻", slug: "material-de-informatica" },
+    { name: "Material de escritório", icon: "📎", slug: "material-de-escritorio" },
+    { name: "Armarinho", icon: "🧵", slug: "armarinho" },
+    { name: "Impressão", icon: "🖨️", slug: "impressao" },
   ];
 
   return (
@@ -176,7 +176,7 @@ const HeroSection = () => {
             {featuredProducts.map((category, index) => (
               <Link
                 key={index}
-                to="/produtos"
+                to={`/categoria/${category.slug}`}
                 className="group bg-primary-foreground/10 hover:bg-secondary border border-primary-foreground/20 hover:border-secondary rounded-lg md:rounded-xl p-3 md:p-5 text-center transition-all duration-300 hover:scale-105 hover:shadow-accent"
               >
                 <span className="text-2xl md:text-4xl mb-2 md:mb-3 block transition-transform duration-300 group-hover:scale-110">{category.icon}</span>

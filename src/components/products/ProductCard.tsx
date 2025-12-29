@@ -1,4 +1,5 @@
 import { ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
@@ -14,7 +15,9 @@ export const ProductCard = ({ id, name, price, image_url }: ProductCardProps) =>
   const { addToCart } = useCart();
   const { toast } = useToast();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     addToCart({ id, name, price, image_url });
     toast({
       title: 'Produto adicionado',
@@ -30,7 +33,10 @@ export const ProductCard = ({ id, name, price, image_url }: ProductCardProps) =>
   };
 
   return (
-    <div className="bg-card rounded-lg md:rounded-xl border border-border overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-secondary/30">
+    <Link 
+      to={`/produto/${id}`}
+      className="block bg-card rounded-lg md:rounded-xl border border-border overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-secondary/30"
+    >
       <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
         {image_url ? (
           <img
@@ -54,6 +60,6 @@ export const ProductCard = ({ id, name, price, image_url }: ProductCardProps) =>
           Comprar
         </Button>
       </div>
-    </div>
+    </Link>
   );
 };

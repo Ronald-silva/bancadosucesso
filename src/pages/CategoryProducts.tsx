@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/products/ProductCard";
 import { CartButton } from "@/components/cart/CartButton";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { cn } from "@/lib/utils";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 interface Category {
@@ -36,6 +37,7 @@ const CategoryProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
 
   useEffect(() => {
     if (slug) {
@@ -78,7 +80,12 @@ const CategoryProducts = () => {
     setIsLoading(false);
   };
 
-  // Group products by subcategory
+  // Filter products based on selected subcategory
+  const filteredProducts = selectedSubcategory
+    ? products.filter((p) => p.subcategory_id === selectedSubcategory)
+    : products;
+
+  // Group products by subcategory for display when "Todos" is selected
   const getProductsBySubcategory = (subcategoryId: string) => {
     return products.filter((p) => p.subcategory_id === subcategoryId);
   };
@@ -136,6 +143,39 @@ const CategoryProducts = () => {
           Voltar ao Início
         </Link>
 
+        {/* Subcategory Filter Tabs */}
+        {subcategories.length > 0 && (
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSelectedSubcategory(null)}
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  selectedSubcategory === null
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                )}
+              >
+                Todos
+              </button>
+              {subcategories.map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => setSelectedSubcategory(sub.id)}
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    selectedSubcategory === sub.id
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  )}
+                >
+                  {sub.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {products.length === 0 ? (
           <div className="text-center py-12">
             <ShoppingCart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
@@ -143,12 +183,37 @@ const CategoryProducts = () => {
               Nenhum produto nesta categoria ainda.
             </p>
           </div>
+        ) : selectedSubcategory ? (
+          /* Show only filtered products when a subcategory is selected */
+          <div>
+            <h2 className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {subcategories.find(s => s.id === selectedSubcategory)?.name}
+            </h2>
+            {filteredProducts.length === 0 ? (
+              <p className="text-muted-foreground text-center py-8">
+                Nenhum produto nesta subcategoria.
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    image_url={product.image_url}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         ) : (
+          /* Show all products grouped by subcategory */
           <div className="space-y-10">
             {/* Products without subcategory */}
             {productsWithoutSubcategory.length > 0 && (
               <div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
                   {productsWithoutSubcategory.map((product) => (
                     <ProductCard
                       key={product.id}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus } from 'lucide-react';
+import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
@@ -9,6 +9,7 @@ import logoImg from '@/assets/logo-banca-sucesso.jpg';
 import { CategoryManager } from '@/components/admin/CategoryManager';
 import { SubcategoryManager } from '@/components/admin/SubcategoryManager';
 import { AdminProductForm } from '@/components/admin/AdminProductForm';
+import { SalesManager } from '@/components/admin/SalesManager';
 
 interface Order {
   id: string;
@@ -161,8 +162,9 @@ const Admin = () => {
 
         {/* Admin Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Visão Geral</TabsTrigger>
+            <TabsTrigger value="sales">Vendas</TabsTrigger>
             <TabsTrigger value="products">Produtos</TabsTrigger>
             <TabsTrigger value="categories">Categorias</TabsTrigger>
             <TabsTrigger value="subcategories">Subcategorias</TabsTrigger>
@@ -275,6 +277,11 @@ const Admin = () => {
                 </div>
               )}
             </div>
+          </TabsContent>
+
+          {/* Sales Tab */}
+          <TabsContent value="sales" className="space-y-6">
+            <SalesManager />
           </TabsContent>
 
           {/* Products Tab */}

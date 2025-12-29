@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
+import { useAuth } from "@/contexts/AuthContext";
 
 const HeroSection = () => {
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -32,6 +34,20 @@ const HeroSection = () => {
           <div className="absolute top-20 left-10 w-72 h-72 bg-secondary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-foreground/5 rounded-full blur-3xl" />
+        </div>
+
+        {/* Admin Button */}
+        <div className="absolute top-4 right-4 z-20">
+          <Button
+            variant="hero"
+            size="sm"
+            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold shadow-lg"
+            asChild
+          >
+            <Link to={user && isAdmin ? "/admin" : "/auth"}>
+              Adm
+            </Link>
+          </Button>
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

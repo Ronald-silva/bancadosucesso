@@ -38,22 +38,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let isMounted = true;
 
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         if (!isMounted) return;
+        
+        console.log('Auth state changed:', event, session?.user?.email);
         
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          setTimeout(() => {
+          // Defer the admin check to avoid deadlock
+          setTimeout(async () => {
             if (isMounted) {
-              checkAdminRole(session.user.id).then((isAdminResult) => {
-                if (isMounted) {
-                  setIsAdmin(isAdminResult);
-                  setIsLoading(false);
-                }
-              });
+              const isAdminResult = await checkAdminRole(session.user.id);
+              if (isMounted) {
+                console.log('Admin check result:', isAdminResult);
+                setIsAdmin(isAdminResult);
+                setIsLoading(false);
+              }
             }
           }, 0);
         } else {
@@ -63,19 +67,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     );
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // THEN check for existing session
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!isMounted) return;
+      
+      console.log('Initial session check:', session?.user?.email);
       
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        checkAdminRole(session.user.id).then(isAdminResult => {
-          if (isMounted) {
-            setIsAdmin(isAdminResult);
-            setIsLoading(false);
-          }
-        });
+        const isAdminResult = await checkAdminRole(session.user.id);
+        if (isMounted) {
+          console.log('Initial admin check result:', isAdminResult);
+          setIsAdmin(isAdminResult);
+          setIsLoading(false);
+        }
       } else {
         setIsLoading(false);
       }

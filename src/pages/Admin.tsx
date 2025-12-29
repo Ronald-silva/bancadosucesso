@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus, DollarSign } from 'lucide-react';
+import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
@@ -10,6 +10,7 @@ import { CategoryManager } from '@/components/admin/CategoryManager';
 import { SubcategoryManager } from '@/components/admin/SubcategoryManager';
 import { AdminProductForm } from '@/components/admin/AdminProductForm';
 import { SalesManager } from '@/components/admin/SalesManager';
+import { FeaturedProductsManager } from '@/components/admin/FeaturedProductsManager';
 
 interface Order {
   id: string;
@@ -19,6 +20,14 @@ interface Order {
   total: number;
   status: string;
   created_at: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image_url: string | null;
+  is_featured: boolean;
 }
 
 const Admin = () => {
@@ -162,9 +171,10 @@ const Admin = () => {
 
         {/* Admin Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Visão Geral</TabsTrigger>
             <TabsTrigger value="sales">Vendas</TabsTrigger>
+            <TabsTrigger value="vitrine">Vitrine</TabsTrigger>
             <TabsTrigger value="products">Produtos</TabsTrigger>
             <TabsTrigger value="categories">Categorias</TabsTrigger>
             <TabsTrigger value="subcategories">Subcategorias</TabsTrigger>
@@ -282,6 +292,13 @@ const Admin = () => {
           {/* Sales Tab */}
           <TabsContent value="sales" className="space-y-6">
             <SalesManager />
+          </TabsContent>
+
+          {/* Vitrine Tab */}
+          <TabsContent value="vitrine" className="space-y-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <FeaturedProductsManager />
+            </div>
           </TabsContent>
 
           {/* Products Tab */}

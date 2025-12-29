@@ -16,6 +16,7 @@ interface Product {
   name: string;
   price: number;
   image_url: string | null;
+  is_featured: boolean;
 }
 
 const Products = () => {
@@ -208,8 +209,11 @@ const Products = () => {
                 <AdminProductCard
                   key={product.id}
                   {...product}
+                  image_url={product.image_url || ''}
+                  is_featured={product.is_featured}
                   onEdit={() => handleEdit(product)}
                   onDelete={fetchProducts}
+                  onToggleFeatured={fetchProducts}
                 />
               ) : (
                 <ProductCard key={product.id} {...product} />

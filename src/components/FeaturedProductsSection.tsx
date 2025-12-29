@@ -9,6 +9,7 @@ interface Product {
   name: string;
   price: number;
   image_url: string | null;
+  is_featured: boolean;
 }
 
 const FeaturedProductsSection = () => {
@@ -19,8 +20,9 @@ const FeaturedProductsSection = () => {
     const fetchProducts = async () => {
       const { data, error } = await supabase
         .from("products")
-        .select("id, name, price, image_url")
-        .limit(6)
+        .select("id, name, price, image_url, is_featured")
+        .eq("is_featured", true)
+        .limit(5)
         .order("created_at", { ascending: false });
 
       if (!error && data) {
@@ -43,8 +45,8 @@ const FeaturedProductsSection = () => {
     return (
       <section className="py-12 md:py-16 bg-muted/30">
         <div className="container px-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-            {[...Array(6)].map((_, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+            {[...Array(5)].map((_, i) => (
               <div
                 key={i}
                 className="bg-card rounded-xl h-48 md:h-64 animate-pulse"
@@ -84,7 +86,7 @@ const FeaturedProductsSection = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-6 mb-8 md:mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 mb-8 md:mb-10">
           {products.map((product, index) => (
             <Link
               key={product.id}

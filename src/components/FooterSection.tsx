@@ -1,84 +1,164 @@
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, MessageCircle } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 
 const FooterSection = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-primary text-primary-foreground py-10 md:py-12">
-      <div className="container px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8 md:mb-10">
+    <footer className="bg-foreground text-background">
+      {/* Main Footer */}
+      <div className="container py-10 md:py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
-          <div className="text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
-              <img 
-                src={logoImg} 
-                alt="Banca do Sucesso Home Center" 
-                className="w-10 h-10 rounded-full object-cover border-2 border-secondary"
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src={logoImg}
+                alt="Banca do Sucesso"
+                className="w-12 h-12 rounded-full object-cover border-2 border-secondary"
               />
-              <span className="font-semibold text-lg">
-                Banca do Sucesso
-              </span>
-            </div>
-            <p className="text-primary-foreground/70 text-sm max-w-xs mx-auto sm:mx-0">
-              Há mais de 10 anos transformando a experiência de compra online no Brasil.
+              <div>
+                <span className="font-bold text-lg block text-background">
+                  Banca do Sucesso
+                </span>
+                <span className="text-xs text-background/60">Home Center</span>
+              </div>
+            </Link>
+            <p className="text-sm text-background/70 leading-relaxed">
+              Há mais de 10 anos oferecendo os melhores produtos para sua casa e construção com preços imbatíveis.
             </p>
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-background/10 hover:bg-secondary flex items-center justify-center transition-colors group"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5 text-background group-hover:text-secondary-foreground" />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-background/10 hover:bg-secondary flex items-center justify-center transition-colors group"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5 text-background group-hover:text-secondary-foreground" />
+              </a>
+              <a
+                href="https://wa.me/559182750788"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-background/10 hover:bg-success flex items-center justify-center transition-colors group"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="w-5 h-5 text-background group-hover:text-success-foreground" />
+              </a>
+            </div>
           </div>
 
           {/* Contact */}
-          <div className="text-center sm:text-left">
-            <h4 className="font-medium mb-4">Contato</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/70">
-              <li className="flex items-center justify-center sm:justify-start gap-2">
-                <Mail className="w-4 h-4 flex-shrink-0" />
-                <span className="break-all">contato@bancadosucesso.com</span>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-background">Contato</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a
+                  href="mailto:contato@bancadosucesso.com"
+                  className="flex items-start gap-3 text-background/70 hover:text-secondary transition-colors"
+                >
+                  <Mail className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>contato@bancadosucesso.com</span>
+                </a>
               </li>
-              <li className="flex items-center justify-center sm:justify-start gap-2">
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>+55 (91) 8275-0788</span>
+              <li>
+                <a
+                  href="tel:+559182750788"
+                  className="flex items-start gap-3 text-background/70 hover:text-secondary transition-colors"
+                >
+                  <Phone className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>+55 (91) 8275-0788</span>
+                </a>
               </li>
-              <li className="flex items-center justify-center sm:justify-start gap-2">
-                <MapPin className="w-4 h-4 flex-shrink-0" />
-                <span className="text-xs md:text-sm">Tv. Frutuoso Guimarães, 110 - Campina, Belém - PA</span>
+              <li className="flex items-start gap-3 text-background/70">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>Tv. Frutuoso Guimarães, 110<br />Campina, Belém - PA</span>
               </li>
-              <li className="flex items-center justify-center sm:justify-start gap-2">
-                <Clock className="w-4 h-4 flex-shrink-0" />
-                <span className="text-xs md:text-sm">Seg-Sex: 08:00–18:00 | Sáb: 08:00–16:00</span>
+              <li className="flex items-start gap-3 text-background/70">
+                <Clock className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="block">Seg-Sex: 08:00–18:00</span>
+                  <span>Sáb: 08:00–16:00</span>
+                </div>
               </li>
             </ul>
           </div>
 
           {/* Links */}
-          <div className="text-center sm:text-left">
-            <h4 className="font-medium mb-4">Links úteis</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/70">
+          <div className="space-y-4">
+            <h4 className="font-semibold text-background">Institucional</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-secondary transition-colors">
+                <Link to="/" className="text-background/70 hover:text-secondary transition-colors">
+                  Sobre Nós
+                </Link>
+              </li>
+              <li>
+                <Link to="/produtos" className="text-background/70 hover:text-secondary transition-colors">
+                  Nossos Produtos
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
                   Política de Privacidade
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-secondary transition-colors">
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
                   Termos de Uso
                 </a>
               </li>
+            </ul>
+          </div>
+
+          {/* Customer Service */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-background">Atendimento</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-secondary transition-colors">
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
+                  Central de Ajuda
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
                   Trocas e Devoluções
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-secondary transition-colors">
-                  FAQ
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
+                  Formas de Pagamento
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-background/70 hover:text-secondary transition-colors">
+                  Prazo de Entrega
                 </a>
               </li>
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="pt-6 md:pt-8 border-t border-primary-foreground/10 text-center">
-          <p className="text-xs md:text-sm text-primary-foreground/50">
-            © 2025 Banca do Sucesso. Todos os direitos reservados.
-          </p>
+      {/* Bottom bar */}
+      <div className="border-t border-background/10">
+        <div className="container py-4 md:py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <p className="text-xs md:text-sm text-background/50">
+              © {currentYear} Banca do Sucesso. Todos os direitos reservados.
+            </p>
+            <div className="flex items-center gap-4 text-xs text-background/40">
+              <span>CNPJ: XX.XXX.XXX/0001-XX</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

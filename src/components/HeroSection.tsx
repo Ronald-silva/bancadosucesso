@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Instagram } from "lucide-react";
 import logoImg from "@/assets/logo-banca-sucesso.jpg";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -132,6 +132,21 @@ const HeroSection = () => {
                   rel="noopener noreferrer"
                 >
                   Falar no WhatsApp
+                </a>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-2 border-primary-foreground/30 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 hover:text-primary-foreground hover:border-secondary w-full sm:w-auto text-sm md:text-base"
+                asChild
+              >
+                <a 
+                  href="https://www.instagram.com/bancadosucesso_inf?igsh=ZDA3cW52cnh2N2N3" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Instagram className="w-4 h-4 mr-2" />
+                  Instagram
                 </a>
               </Button>
             </div>

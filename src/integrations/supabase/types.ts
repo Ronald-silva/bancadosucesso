@@ -129,6 +129,7 @@ export type Database = {
           is_featured: boolean
           name: string
           price: number
+          product_code: string | null
           subcategory_id: string | null
           updated_at: string
         }
@@ -141,6 +142,7 @@ export type Database = {
           is_featured?: boolean
           name: string
           price: number
+          product_code?: string | null
           subcategory_id?: string | null
           updated_at?: string
         }
@@ -153,6 +155,7 @@ export type Database = {
           is_featured?: boolean
           name?: string
           price?: number
+          product_code?: string | null
           subcategory_id?: string | null
           updated_at?: string
         }

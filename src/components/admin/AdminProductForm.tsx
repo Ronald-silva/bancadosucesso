@@ -38,6 +38,7 @@ interface AdminProductFormProps {
     image_url: string | null;
     category_id: string | null;
     subcategory_id: string | null;
+    product_code: string | null;
   };
 }
 
@@ -48,6 +49,7 @@ export const AdminProductForm = ({
 }: AdminProductFormProps) => {
   const [name, setName] = useState(editProduct?.name || "");
   const [description, setDescription] = useState(editProduct?.description || "");
+  const [productCode, setProductCode] = useState(editProduct?.product_code || "");
   const [price, setPrice] = useState(editProduct?.price?.toString() || "");
   const [categoryId, setCategoryId] = useState(editProduct?.category_id || "");
   const [subcategoryId, setSubcategoryId] = useState(editProduct?.subcategory_id || "");
@@ -168,6 +170,7 @@ export const AdminProductForm = ({
       const productData = {
         name: name.trim(),
         description: description.trim() || null,
+        product_code: productCode.trim() || null,
         price: priceValue,
         image_url: imageUrl,
         category_id: categoryId || null,
@@ -284,6 +287,17 @@ export const AdminProductForm = ({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Descreva o produto em detalhes..."
               className="mt-1 min-h-[100px]"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="productCode">Código do Produto</Label>
+            <Input
+              id="productCode"
+              value={productCode}
+              onChange={(e) => setProductCode(e.target.value)}
+              placeholder="Ex: PROD-001"
+              className="mt-1"
             />
           </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus, DollarSign, Star } from 'lucide-react';
+import { ArrowLeft, LogOut, Package, ShoppingCart, Users, Layers, Plus, DollarSign, Star, UserCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/AuthContext';
@@ -11,6 +11,7 @@ import { SubcategoryManager } from '@/components/admin/SubcategoryManager';
 import { AdminProductForm } from '@/components/admin/AdminProductForm';
 import { SalesManager } from '@/components/admin/SalesManager';
 import { FeaturedProductsManager } from '@/components/admin/FeaturedProductsManager';
+import { SalespeopleManager } from '@/components/admin/SalespeopleManager';
 
 interface Order {
   id: string;
@@ -171,9 +172,10 @@ const Admin = () => {
 
         {/* Admin Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Visão Geral</TabsTrigger>
             <TabsTrigger value="sales">Vendas</TabsTrigger>
+            <TabsTrigger value="salespeople">Vendedores</TabsTrigger>
             <TabsTrigger value="vitrine">Vitrine</TabsTrigger>
             <TabsTrigger value="products">Produtos</TabsTrigger>
             <TabsTrigger value="categories">Categorias</TabsTrigger>
@@ -292,6 +294,13 @@ const Admin = () => {
           {/* Sales Tab */}
           <TabsContent value="sales" className="space-y-6">
             <SalesManager />
+          </TabsContent>
+
+          {/* Salespeople Tab */}
+          <TabsContent value="salespeople" className="space-y-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <SalespeopleManager />
+            </div>
           </TabsContent>
 
           {/* Vitrine Tab */}

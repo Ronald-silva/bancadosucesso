@@ -129,8 +129,11 @@ const Checkout = () => {
       clearCart();
       setOrderSuccess(true);
       
-      // Open WhatsApp
-      window.open(whatsappUrl, '_blank');
+      // Open WhatsApp - iOS Safari blocks window.open, use location.href as primary method
+      // Small delay to ensure state updates complete before redirect
+      setTimeout(() => {
+        window.location.href = whatsappUrl;
+      }, 100);
     } catch (error: any) {
       toast({
         title: 'Erro de validação',

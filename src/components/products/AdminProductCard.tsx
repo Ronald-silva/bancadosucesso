@@ -91,7 +91,7 @@ export const AdminProductCard = ({
           <img
             src={image_url}
             alt={name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         ) : (
           <div className="text-muted-foreground text-sm">Sem imagem</div>

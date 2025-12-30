@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Upload } from "lucide-react";
+import { X, Upload, Crop } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,7 +14,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { mapDatabaseError } from "@/lib/errorMapper";
-
+import { ImageCropEditor } from "./ImageCropEditor";
 interface Category {
   id: string;
   name: string;
@@ -60,6 +60,8 @@ export const AdminProductForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [showCropEditor, setShowCropEditor] = useState(false);
+  const [originalImageSrc, setOriginalImageSrc] = useState<string | null>(null);
   const { toast } = useToast();
 
   const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -112,12 +114,41 @@ export const AdminProductForm = ({
         return;
       }
 
-      setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => {
-        setImagePreview(reader.result as string);
+        const imgSrc = reader.result as string;
+        setOriginalImageSrc(imgSrc);
+        setShowCropEditor(true);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCropSave = (croppedBlob: Blob) => {
+    const croppedFile = new File([croppedBlob], "cropped-image.jpg", {
+      type: "image/jpeg",
+    });
+    setImageFile(croppedFile);
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(croppedBlob);
+    
+    setShowCropEditor(false);
+    setOriginalImageSrc(null);
+  };
+
+  const handleCropCancel = () => {
+    setShowCropEditor(false);
+    setOriginalImageSrc(null);
+  };
+
+  const handleEditExistingImage = () => {
+    if (imagePreview) {
+      setOriginalImageSrc(imagePreview);
+      setShowCropEditor(true);
     }
   };
 
@@ -319,22 +350,34 @@ export const AdminProductForm = ({
             <Label htmlFor="image">Imagem do Produto</Label>
             <div className="mt-1">
               {imagePreview ? (
-                <div className="relative aspect-square max-w-48 mx-auto mb-2">
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                  <button
+                <div className="space-y-2">
+                  <div className="relative aspect-square max-w-48 mx-auto">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImageFile(null);
+                        setImagePreview(null);
+                      }}
+                      className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <Button
                     type="button"
-                    onClick={() => {
-                      setImageFile(null);
-                      setImagePreview(null);
-                    }}
-                    className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleEditExistingImage}
+                    className="w-full flex items-center justify-center gap-2"
                   >
-                    <X className="w-4 h-4" />
-                  </button>
+                    <Crop className="w-4 h-4" />
+                    Editar / Recortar Imagem
+                  </Button>
                 </div>
               ) : (
                 <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
@@ -353,6 +396,15 @@ export const AdminProductForm = ({
               )}
             </div>
           </div>
+
+          {/* Image Crop Editor Modal */}
+          {showCropEditor && originalImageSrc && (
+            <ImageCropEditor
+              imageSrc={originalImageSrc}
+              onSave={handleCropSave}
+              onCancel={handleCropCancel}
+            />
+          )}
 
           <div className="flex gap-3 pt-2">
             <Button

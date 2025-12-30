@@ -71,7 +71,7 @@ const HeroSection = () => {
               className="text-sm sm:text-base md:text-lg text-primary-foreground/85 max-w-2xl mb-5 md:mb-6 animate-fade-in px-4"
               style={{ animationDelay: "0.2s" }}
             >
-              Encontre tudo o que precisa para sua casa e trabalho com preços acessíveis e entrega rápida.
+              Encontre tudo o que precisa para sua casa e trabalho com preços acessíveis e atendimento rápido.
             </p>
 
             {/* Search Bar */}

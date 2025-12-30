@@ -17,6 +17,7 @@ interface Product {
   price: number;
   image_url: string | null;
   is_featured: boolean;
+  product_code: string | null;
 }
 
 const Products = () => {
@@ -55,7 +56,8 @@ const Products = () => {
   }, [searchQuery]);
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (product.product_code && product.product_code.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const handleSearch = (e: React.FormEvent) => {

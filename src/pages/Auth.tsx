@@ -72,7 +72,19 @@ const Auth = () => {
     );
   }
 
-  // If user is logged in but not admin, show access denied
+  // Handle logout for retry with different account
+  const handleLogoutAndRetry = async () => {
+    const { signOut } = await import('@/contexts/AuthContext').then(m => ({ signOut: m.useAuth }));
+    // We need to call signOut from the auth context
+    await import('@/integrations/supabase/client').then(async ({ supabase }) => {
+      await supabase.auth.signOut();
+    });
+    setEmail('');
+    setPassword('');
+    setErrorMessage(null);
+  };
+
+  // If user is logged in but not admin, show access denied with retry option
   if (user && !isAdmin) {
     return (
       <div className="min-h-screen bg-primary flex items-center justify-center p-4">
@@ -80,16 +92,29 @@ const Auth = () => {
           <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <ShieldCheck className="w-8 h-8 text-destructive" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">Acesso Restrito</h1>
-          <p className="text-muted-foreground mb-6">
-            Você não possui permissões de administrador para acessar esta área.
+          <h1 className="text-2xl font-bold text-foreground mb-2">Acesso Negado</h1>
+          <p className="text-muted-foreground mb-2">
+            A conta <strong className="text-foreground">{user.email}</strong> não possui permissões de administrador.
           </p>
-          <Link to="/">
-            <Button variant="outline" className="w-full">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Voltar ao Site
+          <p className="text-muted-foreground mb-6 text-sm">
+            Você pode tentar novamente com outra conta de administrador.
+          </p>
+          <div className="space-y-3">
+            <Button 
+              onClick={handleLogoutAndRetry} 
+              className="w-full"
+              size="lg"
+            >
+              <Lock className="w-4 h-4 mr-2" />
+              Tentar com outra conta
             </Button>
-          </Link>
+            <Link to="/">
+              <Button variant="outline" className="w-full">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar ao Site
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );

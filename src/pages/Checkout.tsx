@@ -9,6 +9,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import logoImg from '@/assets/logo-banca-sucesso.jpg';
+import { SalespersonSelector } from '@/components/cart/SalespersonSelector';
 
 interface CartItem {
   id: string;
@@ -28,6 +29,7 @@ const Checkout = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [salesperson, setSalesperson] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const { items, totalPrice, clearCart } = useCart();
@@ -109,8 +111,11 @@ const Checkout = () => {
       message += '👤 *Dados do Cliente:*\n';
       message += `Nome: ${name.trim()}\n`;
       message += `Email: ${email.trim()}\n`;
-      message += `Telefone: ${phone.trim()}\n\n`;
-      message += '📦 *Produtos:*\n';
+      message += `Telefone: ${phone.trim()}\n`;
+      if (salesperson) {
+        message += `Vendedor: ${salesperson}\n`;
+      }
+      message += '\n📦 *Produtos:*\n';
       message += '─────────────────\n';
       
       items.forEach((item) => {
@@ -295,6 +300,11 @@ const Checkout = () => {
                     required
                   />
                 </div>
+
+                <SalespersonSelector
+                  value={salesperson}
+                  onChange={setSalesperson}
+                />
 
                 <Button
                   type="submit"

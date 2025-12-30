@@ -152,7 +152,7 @@ const Admin = () => {
             onClick={handleLogout}
             variant="outline"
             size="sm"
-            className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+            className="border-foreground/30 bg-background text-foreground hover:bg-muted"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sair

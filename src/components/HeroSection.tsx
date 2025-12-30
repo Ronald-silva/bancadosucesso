@@ -35,18 +35,13 @@ const HeroSection = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-foreground/5 rounded-full blur-3xl" />
         </div>
 
-        {/* Admin Button */}
+        {/* Admin Button - Hidden but functional */}
         <div className="absolute top-4 right-4 z-20">
-          <Button
-            variant="hero"
-            size="sm"
-            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold shadow-lg"
-            asChild
-          >
-            <Link to={user && isAdmin ? "/admin" : "/auth"}>
-              Adm
-            </Link>
-          </Button>
+          <Link 
+            to={user && isAdmin ? "/admin" : "/auth"}
+            className="block w-12 h-8 opacity-0 cursor-default"
+            aria-label="Acesso administrativo"
+          />
         </div>
 
         <div className="container px-4 py-12 md:py-24 relative z-10">

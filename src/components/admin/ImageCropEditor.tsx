@@ -235,15 +235,15 @@ export const ImageCropEditor = ({
   const cropDimensions = getCropDimensions();
 
   return (
-    <div className="fixed inset-0 bg-foreground/80 flex items-center justify-center z-[60] p-4">
-      <div className="bg-background rounded-lg max-w-3xl w-full p-6 shadow-xl max-h-[95vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-4">
+    <div className="fixed inset-0 bg-foreground/90 flex items-center justify-center z-[60] p-2 md:p-4">
+      <div className="bg-background rounded-lg w-full max-w-5xl p-4 md:p-6 shadow-xl max-h-[98vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-3">
           <div>
             <h3 className="text-lg font-semibold text-foreground">
-              Editor de Imagem Completo
+              Editor de Imagem
             </h3>
             <p className="text-sm text-muted-foreground">
-              Recorte, redimensione e ajuste livremente de todos os lados
+              Arraste as bordas ou cantos para recortar livremente
             </p>
           </div>
           <button
@@ -254,20 +254,16 @@ export const ImageCropEditor = ({
           </button>
         </div>
 
-        <div className="space-y-4">
-          {/* Controls Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Aspect Ratio Selection */}
-            <div>
-              <Label className="flex items-center gap-2">
-                <Move className="w-4 h-4" />
-                Proporção / Formato
-              </Label>
+        <div className="space-y-3">
+          {/* Controls Row - Compact */}
+          <div className="flex flex-wrap gap-3 items-end">
+            <div className="min-w-[160px]">
+              <Label className="text-xs">Proporção</Label>
               <Select
                 value={aspectRatio}
                 onValueChange={(v) => handleAspectRatioChange(v as AspectRatioOption)}
               >
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="mt-1 h-9">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -282,69 +278,86 @@ export const ImageCropEditor = ({
               </Select>
             </div>
 
-            {/* Zoom Slider */}
-            <div>
-              <Label>Zoom: {scale}%</Label>
+            <div className="min-w-[140px]">
+              <Label className="text-xs">Zoom: {scale}%</Label>
               <Slider
                 value={[scale]}
                 onValueChange={(v) => setScale(v[0])}
-                min={50}
-                max={200}
+                min={30}
+                max={150}
                 step={5}
-                className="mt-3"
+                className="mt-2"
               />
             </div>
-          </div>
 
-          {/* Output Dimensions (Optional) */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label className="flex items-center gap-2">
-                <Maximize2 className="w-4 h-4" />
-                Largura Final (px)
-              </Label>
-              <Input
-                type="number"
-                value={outputWidth}
-                onChange={(e) => setOutputWidth(e.target.value)}
-                placeholder={`Auto (${cropDimensions.width}px)`}
-                className="mt-1"
-                min="1"
-              />
+            <div className="flex gap-2">
+              <div className="w-24">
+                <Label className="text-xs">Largura (px)</Label>
+                <Input
+                  type="number"
+                  value={outputWidth}
+                  onChange={(e) => setOutputWidth(e.target.value)}
+                  placeholder="Auto"
+                  className="mt-1 h-9"
+                  min="1"
+                />
+              </div>
+              <div className="w-24">
+                <Label className="text-xs">Altura (px)</Label>
+                <Input
+                  type="number"
+                  value={outputHeight}
+                  onChange={(e) => setOutputHeight(e.target.value)}
+                  placeholder="Auto"
+                  className="mt-1 h-9"
+                  min="1"
+                />
+              </div>
             </div>
-            <div>
-              <Label>Altura Final (px)</Label>
-              <Input
-                type="number"
-                value={outputHeight}
-                onChange={(e) => setOutputHeight(e.target.value)}
-                placeholder={`Auto (${cropDimensions.height}px)`}
-                className="mt-1"
-                min="1"
-              />
+
+            <div className="flex gap-2 ml-auto">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleReset}
+              >
+                <RotateCcw className="w-4 h-4" />
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleSelectAll}
+              >
+                <Maximize2 className="w-4 h-4 mr-1" />
+                Tudo
+              </Button>
             </div>
           </div>
 
           {/* Current Dimensions Info */}
-          <div className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
-            <strong>Área selecionada:</strong> {cropDimensions.width} x {cropDimensions.height} px
+          <div className="text-xs text-muted-foreground">
+            <strong>Seleção:</strong> {cropDimensions.width} x {cropDimensions.height} px
             {(outputWidth || outputHeight) && (
               <span className="ml-2">
-                → <strong>Saída:</strong>{" "}
-                {outputWidth || "auto"} x {outputHeight || "auto"} px
+                → <strong>Saída:</strong> {outputWidth || "auto"} x {outputHeight || "auto"} px
               </span>
             )}
           </div>
 
-          {/* Image Crop Area */}
-          <div className="flex justify-center bg-muted/50 rounded-lg p-4 overflow-auto max-h-[45vh]">
+          {/* Image Crop Area - MUCH LARGER */}
+          <div 
+            className="flex justify-center items-center bg-muted/30 rounded-lg overflow-auto border border-border"
+            style={{ minHeight: "400px", maxHeight: "calc(98vh - 280px)" }}
+          >
             <ReactCrop
               crop={crop}
               onChange={(_, percentCrop) => setCrop(percentCrop)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspectRatioValues[aspectRatio]}
-              className="max-w-full"
               ruleOfThirds
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
             >
               <img
                 ref={imgRef}
@@ -354,46 +367,17 @@ export const ImageCropEditor = ({
                 style={{
                   transform: `scale(${scale / 100})`,
                   transformOrigin: "center",
-                  maxHeight: "350px",
-                  width: "auto",
+                  maxWidth: "100%",
+                  maxHeight: "calc(98vh - 300px)",
+                  objectFit: "contain",
                 }}
                 crossOrigin="anonymous"
               />
             </ReactCrop>
           </div>
 
-          {/* Instructions */}
-          <div className="text-xs text-muted-foreground bg-primary/5 rounded-lg p-3 space-y-1">
-            <p><strong>Dicas de uso:</strong></p>
-            <ul className="list-disc list-inside space-y-0.5">
-              <li>Arraste as bordas da seleção para recortar de qualquer lado</li>
-              <li>Arraste o centro para mover a área de recorte</li>
-              <li>Use "Livre" para recortar em qualquer proporção</li>
-              <li>Defina dimensões finais para redimensionar a imagem</li>
-            </ul>
-          </div>
-
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleReset}
-              className="flex items-center gap-2"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Resetar
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleSelectAll}
-              className="flex items-center gap-2"
-            >
-              <Maximize2 className="w-4 h-4" />
-              Selecionar Tudo
-            </Button>
-            <div className="flex-1" />
+          <div className="flex justify-end gap-3 pt-1">
             <Button
               type="button"
               variant="outline"
@@ -407,7 +391,7 @@ export const ImageCropEditor = ({
               className="flex items-center gap-2"
             >
               <Check className="w-4 h-4" />
-              Aplicar Edição
+              Aplicar
             </Button>
           </div>
         </div>

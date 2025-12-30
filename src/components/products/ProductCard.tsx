@@ -42,7 +42,7 @@ export const ProductCard = ({ id, name, price, image_url }: ProductCardProps) =>
           <img
             src={image_url}
             alt={name}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
           />
         ) : (
           <div className="text-muted-foreground text-xs md:text-sm">Sem imagem</div>

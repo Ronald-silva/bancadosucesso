@@ -1,4 +1,4 @@
-import { TrendingDown, CreditCard, Truck, HeadphonesIcon, Award } from "lucide-react";
+import { TrendingDown, CreditCard, HeadphonesIcon, Award } from "lucide-react";
 
 const benefits = [
   {
@@ -12,12 +12,6 @@ const benefits = [
     title: "Pagamento flexível",
     description: "PIX, cartão e parcelamento.",
     highlight: "Várias formas de pagamento",
-  },
-  {
-    icon: Truck,
-    title: "Envio rápido",
-    description: "Entrega confiável e rastreável para todo o Brasil.",
-    highlight: "Frete grátis*",
   },
   {
     icon: HeadphonesIcon,

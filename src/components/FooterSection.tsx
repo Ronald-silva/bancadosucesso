@@ -29,7 +29,7 @@ const FooterSection = () => {
             <ul className="space-y-2 text-sm text-primary-foreground/70">
               <li className="flex items-center justify-center sm:justify-start gap-2">
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                <span className="break-all">contato@bancadosucesso.com</span>
+                <span className="break-all">contato@bancadosucessoinf.com.br</span>
               </li>
               <li className="flex items-center justify-center sm:justify-start gap-2">
                 <Phone className="w-4 h-4 flex-shrink-0" />
@@ -78,6 +78,9 @@ const FooterSection = () => {
         <div className="pt-6 md:pt-8 border-t border-primary-foreground/10 text-center">
           <p className="text-xs md:text-sm text-primary-foreground/50">
             © 2025 Banca do Sucesso. Todos os direitos reservados.
+          </p>
+          <p className="text-xs text-primary-foreground/30 mt-2">
+            by Felipe Brunner
           </p>
         </div>
       </div>

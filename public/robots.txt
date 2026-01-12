@@ -9,7 +9,7 @@ Disallow: /admin
 Disallow: /auth
 
 # Sitemap
-Sitemap: https://bancadosucessoinf.com.br/sitemap.xml
+Sitemap: https://www.bancadosucessoinf.com.br/sitemap.xml
 
 # Crawl-delay para bots específicos (evitar sobrecarga)
 User-agent: Googlebot

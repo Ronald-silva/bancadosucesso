@@ -17,9 +17,9 @@ export const StructuredData = () => {
       "@type": "Store",
       "name": "Banca do Sucesso",
       "description": "Loja online com produtos de qualidade e os melhores preços. Material de construção, informática, escritório e muito mais.",
-      "url": "https://bancadosucessoinf.com.br",
-      "logo": "https://bancadosucessoinf.com.br/logo-banca-sucesso.jpg",
-      "image": "https://bancadosucessoinf.com.br/logo-banca-sucesso.jpg",
+      "url": "https://www.bancadosucessoinf.com.br",
+      "logo": "https://www.bancadosucessoinf.com.br/logo-banca-sucesso.jpg",
+      "image": "https://www.bancadosucessoinf.com.br/logo-banca-sucesso.jpg",
       "telephone": "+55-91-98275-0788",
       "priceRange": "$$",
       "address": {
@@ -35,7 +35,7 @@ export const StructuredData = () => {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://bancadosucessoinf.com.br/products?search={search_term_string}"
+          "urlTemplate": "https://www.bancadosucessoinf.com.br/products?search={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
@@ -46,12 +46,12 @@ export const StructuredData = () => {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Banca do Sucesso",
-      "url": "https://bancadosucessoinf.com.br",
+      "url": "https://www.bancadosucessoinf.com.br",
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://bancadosucessoinf.com.br/products?search={search_term_string}"
+          "urlTemplate": "https://www.bancadosucessoinf.com.br/products?search={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
@@ -66,7 +66,7 @@ export const StructuredData = () => {
           "@type": "ListItem",
           "position": 1,
           "name": "Início",
-          "item": "https://bancadosucessoinf.com.br"
+          "item": "https://www.bancadosucessoinf.com.br"
         }
       ]
     };
@@ -77,7 +77,7 @@ export const StructuredData = () => {
         "@type": "ListItem",
         "position": 2,
         "name": "Produtos",
-        "item": "https://bancadosucessoinf.com.br/products"
+        "item": "https://www.bancadosucessoinf.com.br/products"
       });
     } else if (location.pathname.includes('/category/')) {
       const categoryName = location.pathname.split('/category/')[1];
@@ -85,13 +85,13 @@ export const StructuredData = () => {
         "@type": "ListItem",
         "position": 2,
         "name": "Produtos",
-        "item": "https://bancadosucessoinf.com.br/products"
+        "item": "https://www.bancadosucessoinf.com.br/products"
       });
       breadcrumbSchema.itemListElement.push({
         "@type": "ListItem",
         "position": 3,
         "name": categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
-        "item": `https://bancadosucessoinf.com.br${location.pathname}`
+        "item": `https://www.bancadosucessoinf.com.br${location.pathname}`
       });
     }
 

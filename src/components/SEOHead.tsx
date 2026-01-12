@@ -13,8 +13,8 @@ export const SEOHead = ({
   title = 'Banca do Sucesso - Melhor Preço da Loja Online | Compre Agora',
   description = 'Encontre tudo o que precisa na Banca do Sucesso. Produtos de qualidade com os melhores preços do Brasil. Entrega rápida, pagamento seguro e garantia de satisfação.',
   keywords = 'loja online, compras online, melhores preços, produtos qualidade, entrega rápida, Brasil, material construção, informática, escritório, armarinho',
-  ogImage = 'https://bancadosucessoinf.com.br/logo-banca-sucesso.jpg',
-  canonicalUrl = 'https://bancadosucessoinf.com.br',
+  ogImage = 'https://www.bancadosucessoinf.com.br/logo-banca-sucesso.jpg',
+  canonicalUrl = 'https://www.bancadosucessoinf.com.br',
   type = 'website'
 }: SEOHeadProps) => {
 

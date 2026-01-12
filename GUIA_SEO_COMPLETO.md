@@ -8,7 +8,7 @@ Este guia contém todas as configurações e próximos passos para tornar o site
 
 ### 1. **Sitemap.xml** ✓
 - **Arquivo:** `public/sitemap.xml`
-- **URL:** https://bancadosucessoinf.com.br/sitemap.xml
+- **URL:** https://www.bancadosucessoinf.com.br/sitemap.xml
 - Contém todas as páginas principais do site
 - Configurado para atualização diária
 
@@ -69,7 +69,7 @@ O Google Search Console é ESSENCIAL para o site aparecer no Google.
 3. **Adicione a propriedade:**
    - Clique em "Adicionar Propriedade"
    - Escolha "Prefixo de URL"
-   - Digite: `https://bancadosucessoinf.com.br`
+   - Digite: `https://www.bancadosucessoinf.com.br`
 
 4. **Verifique o domínio** (escolha um método):
    - **Método 1 - Tag HTML** (mais fácil):
@@ -86,7 +86,7 @@ O Google Search Console é ESSENCIAL para o site aparecer no Google.
      - Adicione o registro TXT no seu provedor de domínio
 
 5. **Após verificado:**
-   - Envie o sitemap: `https://bancadosucessoinf.com.br/sitemap.xml`
+   - Envie o sitemap: `https://www.bancadosucessoinf.com.br/sitemap.xml`
    - Solicite indexação das páginas principais
    - Aguarde 2-7 dias para aparecer no Google
 
@@ -107,7 +107,7 @@ Para monitorar visitantes e comportamento.
 
 3. **Configure o fluxo de dados:**
    - Plataforma: Web
-   - URL do site: `https://bancadosucessoinf.com.br`
+   - URL do site: `https://www.bancadosucessoinf.com.br`
    - Nome do fluxo: "Site Principal"
 
 4. **Copie o ID de medição:**
@@ -170,7 +170,7 @@ Se tiver loja física ou quiser aparecer no Google Maps.
    - Categoria: Loja de materiais / Loja de informática
    - Endereço (se tiver loja física)
    - Telefone: +55 91 98275-0788
-   - Site: https://bancadosucessoinf.com.br
+   - Site: https://www.bancadosucessoinf.com.br
 
 3. **Adicione fotos:**
    - Logo
@@ -186,7 +186,7 @@ Se tiver loja física ou quiser aparecer no Google Maps.
 
 #### **Bing Webmaster Tools:**
 1. Acesse: https://www.bing.com/webmasters
-2. Adicione o site: `https://bancadosucessoinf.com.br`
+2. Adicione o site: `https://www.bancadosucessoinf.com.br`
 3. Importe dados do Google Search Console (opção rápida)
 4. Envie o sitemap
 
@@ -215,7 +215,7 @@ Se tiver loja física ou quiser aparecer no Google Maps.
 
 3. **PageSpeed Insights:**
    - URL: https://pagespeed.web.dev
-   - Teste: `https://bancadosucessoinf.com.br`
+   - Teste: `https://www.bancadosucessoinf.com.br`
    - Meta: Acima de 90 em Mobile e Desktop
 
 4. **Google Rich Results Test:**
@@ -305,7 +305,7 @@ Após fazer deploy:
 - [ ] Adicionar certificado SSL (já incluso na Vercel)
 
 ### **Acompanhamento (após 7-14 dias):**
-- [ ] Verificar se está aparecendo no Google (busque: "site:bancadosucessoinf.com.br")
+- [ ] Verificar se está aparecendo no Google (busque: "site:www.bancadosucessoinf.com.br")
 - [ ] Verificar posição para palavras-chave principais
 - [ ] Analisar relatórios do Search Console
 - [ ] Analisar tráfego no Analytics

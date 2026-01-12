@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { StructuredData } from "@/components/StructuredData";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import CategoryProducts from "./pages/CategoryProducts";
@@ -24,6 +25,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <StructuredData />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/produtos" element={<Products />} />
